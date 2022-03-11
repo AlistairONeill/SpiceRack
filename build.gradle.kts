@@ -14,6 +14,8 @@ repositories {
 
 dependencies {
     implementation("com.fazecast", "jSerialComm", "2.9.1")
+    implementation("com.ubertob.kondor", "kondor-outcome", "1.7.6")
+
     testImplementation(kotlin("test"))
     testImplementation("io.strikt", "strikt-core", "0.34.1")
 }
