@@ -18,6 +18,9 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation("io.strikt", "strikt-core", "0.34.1")
+
+    testFixturesImplementation("io.strikt", "strikt-core", "0.34.1")
+    testFixturesImplementation("com.ubertob.kondor", "kondor-outcome", "1.7.6")
 }
 
 tasks.test {

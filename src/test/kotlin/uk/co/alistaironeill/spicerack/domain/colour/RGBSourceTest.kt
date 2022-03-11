@@ -1,17 +1,20 @@
 package uk.co.alistaironeill.spicerack.domain.colour
 
 import org.junit.jupiter.api.Test
-import strikt.api.expectThat
 import strikt.assertions.isEqualTo
-import strikt.assertions.isNull
 import uk.co.alistaironeill.spicerack.domain.colour.Colour.GREEN
+import uk.co.alistaironeill.spicerack.domain.error.NotFound
+import uk.co.alistaironeill.spicerack.domain.error.expectFailure
+import uk.co.alistaironeill.spicerack.domain.error.expectSuccess
 
 abstract class RGBSourceTest {
     protected abstract val source: RGBSource
 
     @Test
-    fun `returns null when colour is not present`() {
-        expectThat(source.get(GREEN)).isNull()
+    fun `returns NotFound when colour is not present`() {
+        source.get(GREEN)
+            .expectFailure()
+            .isEqualTo(NotFound(GREEN))
     }
 
     @Test
@@ -21,6 +24,8 @@ abstract class RGBSourceTest {
 
         source.set(colour, rgb)
 
-        expectThat(source.get(colour)).isEqualTo(rgb)
+        source.get(colour)
+            .expectSuccess()
+            .isEqualTo(rgb)
     }
 }
