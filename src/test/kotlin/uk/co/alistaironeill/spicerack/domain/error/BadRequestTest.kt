@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import uk.co.alistaironeill.spicerack.domain.spice.SpiceId
-import uk.co.alistaironeill.spicerack.domain.spice.randomSpiceName
+import uk.co.alistaironeill.spicerack.domain.spice.SpiceName
+import uk.co.alistaironeill.spicerack.domain.spice.random
 
 class BadRequestTest {
     @Nested
@@ -20,7 +21,7 @@ class BadRequestTest {
         @Test
         fun `can create for SpiceName and SpiceId`() {
             val spiceId = SpiceId.mint()
-            val name = randomSpiceName()
+            val name = SpiceName.random()
 
             expectThat(AlreadyExists(name, spiceId)) {
                 get { type }.isEqualTo("SpiceName")

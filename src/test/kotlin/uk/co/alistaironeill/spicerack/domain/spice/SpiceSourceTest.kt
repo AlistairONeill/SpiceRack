@@ -17,8 +17,8 @@ abstract class SpiceSourceTest {
     inner class GetById {
         @Test
         fun `returns spice for id`() {
-            val name = randomSpiceName()
-            val aliases = List(3) { randomSpiceName() }.toSet()
+            val name = SpiceName.random()
+            val aliases = List(3) { SpiceName.random() }.toSet()
 
             val id = source.put(name, aliases)
 
@@ -41,7 +41,7 @@ abstract class SpiceSourceTest {
     inner class GetByName {
         @Test
         fun `can get spice by name`() {
-            val name = randomSpiceName()
+            val name = SpiceName.random()
 
             val id = source.put(name)
 
@@ -55,9 +55,9 @@ abstract class SpiceSourceTest {
 
         @Test
         fun `can get spice by alias`() {
-            val alias = randomSpiceName()
+            val alias = SpiceName.random()
 
-            val id = source.put(randomSpiceName(), setOf(randomSpiceName(), alias, randomSpiceName()))
+            val id = source.put(SpiceName.random(), setOf(SpiceName.random(), alias, SpiceName.random()))
 
             source.get(alias)
                 .expectSuccess()
@@ -69,7 +69,7 @@ abstract class SpiceSourceTest {
 
         @Test
         fun `returns not found for unknown spiceName`() {
-            val name = randomSpiceName()
+            val name = SpiceName.random()
 
             source.get(name)
                 .expectFailure()
@@ -81,7 +81,7 @@ abstract class SpiceSourceTest {
     inner class Create {
         @Test
         fun `can create a spice by name`() {
-            val name = randomSpiceName()
+            val name = SpiceName.random()
 
             source.create(name)
                 .expectSuccess()
@@ -91,7 +91,7 @@ abstract class SpiceSourceTest {
 
         @Test
         fun `cannot create a spice with an already used name`() {
-            val name = randomSpiceName()
+            val name = SpiceName.random()
 
             val id = source.put(name)
 
@@ -102,9 +102,9 @@ abstract class SpiceSourceTest {
 
         @Test
         fun `cannot create a spice with an already used name as an alias`() {
-            val name = randomSpiceName()
+            val name = SpiceName.random()
 
-            val id = source.put(randomSpiceName(), setOf(name))
+            val id = source.put(SpiceName.random(), setOf(name))
 
             source.create(name)
                 .expectFailure()
@@ -116,9 +116,9 @@ abstract class SpiceSourceTest {
     inner class AddAlias {
         @Test
         fun `can add an alias for a spice`() {
-            val id = source.put(randomSpiceName(), emptySet())
+            val id = source.put(SpiceName.random(), emptySet())
 
-            val alias = randomSpiceName()
+            val alias = SpiceName.random()
 
             source.addAlias(id, alias).expectSuccess()
 
@@ -132,14 +132,14 @@ abstract class SpiceSourceTest {
         fun `returns not found for an unknown spiceId`() {
             val spiceId = SpiceId.mint()
 
-            source.addAlias(SpiceId.mint(), randomSpiceName())
+            source.addAlias(SpiceId.mint(), SpiceName.random())
                 .expectFailure()
                 .isEqualTo(NotFound(spiceId))
         }
 
         @Test
         fun  `returns bad request when name already used`() {
-            val name = randomSpiceName()
+            val name = SpiceName.random()
             val id = source.put(name, emptySet())
 
             source.addAlias(id, name)
@@ -153,8 +153,8 @@ abstract class SpiceSourceTest {
 
         @Test
         fun `returns bad request when name already used as an alias`() {
-            val name = randomSpiceName()
-            val id = source.put(randomSpiceName(), setOf(name))
+            val name = SpiceName.random()
+            val id = source.put(SpiceName.random(), setOf(name))
 
             source.addAlias(SpiceId.mint(), name)
                 .expectFailure()
@@ -170,9 +170,9 @@ abstract class SpiceSourceTest {
     inner class RemoveAlias {
         @Test
         fun `can remove alias from a spice with single alias`() {
-            val alias = randomSpiceName()
+            val alias = SpiceName.random()
 
-            val id = source.put(randomSpiceName(), setOf(alias))
+            val id = source.put(SpiceName.random(), setOf(alias))
 
             source.removeAlias(id, alias).expectSuccess()
 
@@ -184,11 +184,11 @@ abstract class SpiceSourceTest {
 
         @Test
         fun `can remove alias from a spice with multiple aliases`() {
-            val alias = randomSpiceName()
+            val alias = SpiceName.random()
 
-            val otherAliases = List(3) { randomSpiceName() }.toSet()
+            val otherAliases = List(3) { SpiceName.random() }.toSet()
 
-            val id = source.put(randomSpiceName(), otherAliases + alias)
+            val id = source.put(SpiceName.random(), otherAliases + alias)
 
             source.removeAlias(id, alias).expectSuccess()
 
@@ -201,7 +201,7 @@ abstract class SpiceSourceTest {
         @Test
         fun `returns a not found for unknown SpiceId`() {
             val id = SpiceId.mint()
-            val alias = randomSpiceName()
+            val alias = SpiceName.random()
             source.removeAlias(id, alias)
                 .expectFailure()
                 .isEqualTo(NotFound(id))
@@ -209,8 +209,8 @@ abstract class SpiceSourceTest {
 
         @Test
         fun `returns a not found for alias not on spice`() {
-            val id = source.put(randomSpiceName(), setOf(randomSpiceName()))
-            val alias = randomSpiceName()
+            val id = source.put(SpiceName.random(), setOf(SpiceName.random()))
+            val alias = SpiceName.random()
 
             source.removeAlias(id, alias)
                 .expectFailure()
@@ -222,7 +222,7 @@ abstract class SpiceSourceTest {
     inner class Remove {
         @Test
         fun `can remove a spice`() {
-            val id = source.put(randomSpiceName())
+            val id = source.put(SpiceName.random())
 
             source.remove(id).expectSuccess()
 

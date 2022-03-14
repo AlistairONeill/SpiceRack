@@ -5,7 +5,8 @@ import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import uk.co.alistaironeill.spicerack.domain.colour.Colour
 import uk.co.alistaironeill.spicerack.domain.spice.SpiceId
-import uk.co.alistaironeill.spicerack.domain.spice.randomSpiceName
+import uk.co.alistaironeill.spicerack.domain.spice.SpiceName
+import uk.co.alistaironeill.spicerack.domain.spice.random
 
 class NotFoundTest {
     @Test
@@ -44,7 +45,7 @@ class NotFoundTest {
 
     @Test
     fun `can create from SpiceName`() {
-        val name = randomSpiceName()
+        val name = SpiceName.random()
 
         expectThat(NotFound(name)) {
             get { type }.isEqualTo("SpiceName")
@@ -55,7 +56,7 @@ class NotFoundTest {
     @Test
     fun `can create from SpiceName on SpiceId`() {
         val spiceId = SpiceId.mint()
-        val name = randomSpiceName()
+        val name = SpiceName.random()
 
         expectThat(NotFound(name, spiceId)) {
             get { type }.isEqualTo("SpiceName")
