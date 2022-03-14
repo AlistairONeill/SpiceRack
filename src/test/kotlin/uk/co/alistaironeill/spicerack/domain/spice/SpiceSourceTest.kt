@@ -97,7 +97,7 @@ abstract class SpiceSourceTest {
 
             source.create(name)
                 .expectFailure()
-                .isEqualTo(AlreadyExists("SpiceName", name.value, "SpiceId", id.value))
+                .isEqualTo(AlreadyExists(name, id))
         }
 
         @Test
@@ -108,7 +108,7 @@ abstract class SpiceSourceTest {
 
             source.create(name)
                 .expectFailure()
-                .isEqualTo(AlreadyExists("SpiceName", name.value, "SpiceId", id.value))
+                .isEqualTo(AlreadyExists(name, id))
         }
     }
 
@@ -132,7 +132,7 @@ abstract class SpiceSourceTest {
         fun `returns not found for an unknown spiceId`() {
             val spiceId = SpiceId.mint()
 
-            source.addAlias(SpiceId.mint(), SpiceName.random())
+            source.addAlias(spiceId, SpiceName.random())
                 .expectFailure()
                 .isEqualTo(NotFound(spiceId))
         }
@@ -144,11 +144,11 @@ abstract class SpiceSourceTest {
 
             source.addAlias(id, name)
                 .expectFailure()
-                .isEqualTo(AlreadyExists("SpiceName", name.value, "SpiceId", id.value))
+                .isEqualTo(AlreadyExists(name, id))
 
             source.addAlias(SpiceId.mint(), name)
                 .expectFailure()
-                .isEqualTo(AlreadyExists("SpiceName", name.value, "SpiceId", id.value))
+                .isEqualTo(AlreadyExists(name, id))
         }
 
         @Test
@@ -158,11 +158,11 @@ abstract class SpiceSourceTest {
 
             source.addAlias(SpiceId.mint(), name)
                 .expectFailure()
-                .isEqualTo(AlreadyExists("SpiceName", name.value, "SpiceId", id.value))
+                .isEqualTo(AlreadyExists(name, id))
 
             source.addAlias(id, name)
                 .expectFailure()
-                .isEqualTo(AlreadyExists("SpiceName", name.value, "SpiceId", id.value))
+                .isEqualTo(AlreadyExists(name, id))
         }
     }
 
