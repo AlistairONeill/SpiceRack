@@ -1,5 +1,6 @@
 package uk.co.alistaironeill.spicerack.error
 
+import com.ubertob.kondor.json.JConverter
 import com.ubertob.kondor.json.ObjectNodeConverter
 import com.ubertob.kondor.outcome.Outcome
 import com.ubertob.kondor.outcome.OutcomeError
@@ -35,14 +36,14 @@ fun HttpOutcome<Unit>.toResponse(): Response =
     transform { Response(OK) }
         .recover(::toResponse)
 
-fun <T: Any> HttpOutcome<T>.toResponse(converter: ObjectNodeConverter<T>): Response =
+fun <T: Any> HttpOutcome<T>.toResponse(converter: JConverter<T>): Response =
     transform(converter::toOkResponse)
         .recover(::toResponse)
 
-private fun <T: Any> ObjectNodeConverter<T>.toOkResponse(obj: T): Response =
+private fun <T: Any> JConverter<T>.toOkResponse(obj: T): Response =
     createJsonResponse(OK, obj)
 
-private fun <T: Any> ObjectNodeConverter<T>.createJsonResponse(status: Status, obj: T): Response =
+private fun <T: Any> JConverter<T>.createJsonResponse(status: Status, obj: T): Response =
     Response(status)
         .body(toJson(obj))
         .header("Content-Type", "application/json")

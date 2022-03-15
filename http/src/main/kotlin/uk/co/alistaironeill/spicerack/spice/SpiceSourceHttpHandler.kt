@@ -7,14 +7,14 @@ import org.http4k.core.Method.*
 import org.http4k.lens.Path
 import uk.co.alistaironeill.spicerack.error.perform
 import uk.co.alistaironeill.spicerack.error.toResponse
-import uk.co.alistaironeill.spicerack.http.tt
+import uk.co.alistaironeill.spicerack.http.str
 
 object SpiceSourceHttpHandler {
     const val SPICE_PATH = "/api/spice"
     const val SPICE_NAME_PATH = "/api/spiceName"
 
-    private val idPath = Path.tt(SpiceId).of("SpiceId")
-    private val namePath = Path.tt(SpiceName).of("SpiceName")
+    private val idPath = Path.str(SpiceId).of("SpiceId")
+    private val namePath = Path.str(SpiceName).of("SpiceName")
 
     fun SpiceSource.toContractRoutes(): List<ContractRoute> =
         listOf(
