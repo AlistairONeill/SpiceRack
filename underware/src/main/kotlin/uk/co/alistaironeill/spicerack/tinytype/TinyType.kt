@@ -20,6 +20,10 @@ abstract class TTCompanionUUID<T: TinyType<String>>(cons: (String) -> T): TTComp
     fun mint() : T = UUID.randomUUID().toString().let(cons)
 }
 
+abstract class TTCompanionInt<T: TinyType<Int>>(override val cons: (Int) -> T): TTCompanion<Int, T> {
+    override val render: (T) -> Int = TinyType<Int>::value
+}
+
 @Suppress("UNCHECKED_CAST")
 inline fun <PRIMITIVE: Any, reified DOMAIN: TinyType<PRIMITIVE>> sniffCompanion() : TTCompanion<PRIMITIVE, DOMAIN> =
     DOMAIN::class
