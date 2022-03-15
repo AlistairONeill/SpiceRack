@@ -30,6 +30,7 @@ dependencies {
     implementation("org.http4k", "http4k-client-apache", http4kVersion)
 
     implementation(project(":domain"))
+    implementation(project(":underware"))
     implementation("com.ubertob.kondor", "kondor-outcome", kondorVersion)
     implementation("com.ubertob.kondor", "kondor-core", kondorVersion)
 

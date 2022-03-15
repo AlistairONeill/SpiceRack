@@ -6,7 +6,7 @@ import strikt.assertions.contains
 import strikt.assertions.isEmpty
 import strikt.assertions.isEqualTo
 import uk.co.alistaironeill.spicerack.domain.spice.random
-import uk.co.alistaironeill.spicerack.error.AlreadyExists
+import uk.co.alistaironeill.spicerack.error.BadRequest.AlreadyExists
 import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.outcome.expectFailure
 import uk.co.alistaironeill.spicerack.outcome.expectSuccess

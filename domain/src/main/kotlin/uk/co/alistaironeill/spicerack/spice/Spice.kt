@@ -1,6 +1,6 @@
 package uk.co.alistaironeill.spicerack.spice
 
-import uk.co.alistaironeill.spicerack.error.AlreadyExists
+import uk.co.alistaironeill.spicerack.error.BadRequest.AlreadyExists
 import uk.co.alistaironeill.spicerack.error.NotFound
 
 data class Spice(
