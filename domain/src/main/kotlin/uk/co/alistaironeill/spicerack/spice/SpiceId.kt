@@ -1,4 +1,4 @@
-package uk.co.alistaironeill.spicerack.domain.spice
+package uk.co.alistaironeill.spicerack.spice
 
 import uk.co.alistaironeill.spicerack.error.NotFound
 import java.util.*

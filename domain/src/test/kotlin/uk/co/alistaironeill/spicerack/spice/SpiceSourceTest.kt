@@ -1,10 +1,11 @@
-package uk.co.alistaironeill.spicerack.domain.spice
+package uk.co.alistaironeill.spicerack.spice
 
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import strikt.assertions.contains
 import strikt.assertions.isEmpty
 import strikt.assertions.isEqualTo
+import uk.co.alistaironeill.spicerack.domain.spice.random
 import uk.co.alistaironeill.spicerack.error.AlreadyExists
 import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.outcome.expectFailure

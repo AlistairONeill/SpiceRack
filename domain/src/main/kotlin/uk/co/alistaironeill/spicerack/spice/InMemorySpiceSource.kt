@@ -1,4 +1,4 @@
-package uk.co.alistaironeill.spicerack.domain.spice
+package uk.co.alistaironeill.spicerack.spice
 
 import com.ubertob.kondor.outcome.*
 import uk.co.alistaironeill.spicerack.error.AlreadyExists

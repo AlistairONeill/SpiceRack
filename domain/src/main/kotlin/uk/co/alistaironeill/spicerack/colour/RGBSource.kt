@@ -1,4 +1,4 @@
-package uk.co.alistaironeill.spicerack.domain.colour
+package uk.co.alistaironeill.spicerack.colour
 
 import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.UnitOutcome

@@ -1,8 +1,9 @@
-package uk.co.alistaironeill.spicerack.domain.colour
+package uk.co.alistaironeill.spicerack.colour
 
 import org.junit.jupiter.api.Test
 import strikt.assertions.isEqualTo
-import uk.co.alistaironeill.spicerack.domain.colour.Colour.GREEN
+import uk.co.alistaironeill.spicerack.colour.Colour.GREEN
+import uk.co.alistaironeill.spicerack.domain.colour.random
 import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.outcome.expectFailure
 import uk.co.alistaironeill.spicerack.outcome.expectSuccess

@@ -1,4 +1,4 @@
-package uk.co.alistaironeill.spicerack.domain.colour
+package uk.co.alistaironeill.spicerack.colour
 
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test

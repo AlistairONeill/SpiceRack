@@ -1,4 +1,4 @@
-package uk.co.alistaironeill.spicerack.domain.spice
+package uk.co.alistaironeill.spicerack.spice
 
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test

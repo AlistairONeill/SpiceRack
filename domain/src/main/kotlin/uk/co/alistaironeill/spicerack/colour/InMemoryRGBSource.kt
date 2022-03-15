@@ -1,4 +1,4 @@
-package uk.co.alistaironeill.spicerack.domain.colour
+package uk.co.alistaironeill.spicerack.colour
 
 import com.ubertob.kondor.outcome.asSuccess
 import com.ubertob.kondor.outcome.failIfNull
