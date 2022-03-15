@@ -35,6 +35,7 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation(testFixtures(project(":underware")))
+    testImplementation(testFixtures(project(":domain")))
     testImplementation("org.http4k", "http4k-testing-strikt", http4kVersion)
     testImplementation("io.strikt", "strikt-core", striktVersion)
 
