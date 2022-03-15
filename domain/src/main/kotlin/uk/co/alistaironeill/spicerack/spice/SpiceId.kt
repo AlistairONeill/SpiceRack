@@ -1,12 +1,11 @@
 package uk.co.alistaironeill.spicerack.spice
 
 import uk.co.alistaironeill.spicerack.error.NotFound
-import java.util.*
+import uk.co.alistaironeill.spicerack.tinytype.TTCompanionUUID
+import uk.co.alistaironeill.spicerack.tinytype.TinyType
 
-data class SpiceId(val value: String) {
-    companion object {
-        fun mint() = SpiceId(UUID.randomUUID().toString())
-    }
+data class SpiceId(override val value: String) : TinyType<String> {
+    companion object : TTCompanionUUID<SpiceId>(::SpiceId)
 }
 
 operator fun NotFound.Companion.invoke(spiceId: SpiceId) = NotFound("Spice", spiceId.value)
