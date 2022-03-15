@@ -1,18 +1,18 @@
 package uk.co.alistaironeill.spicerack.outcome
 
 import com.ubertob.kondor.outcome.Failure
+import com.ubertob.kondor.outcome.Outcome
+import com.ubertob.kondor.outcome.OutcomeError
 import com.ubertob.kondor.outcome.Success
 import strikt.api.expectThat
 import strikt.assertions.isA
-import uk.co.alistaironeill.spicerack.error.AonError
-import uk.co.alistaironeill.spicerack.error.AonOutcome
 
-fun <T> AonOutcome<T>.expectFailure() =
+fun <E: OutcomeError> Outcome<E, *>.expectFailure() =
     expectThat(this)
-        .isA<Failure<AonError>>()
-        .get(Failure<AonError>::error)
+        .isA<Failure<E>>()
+        .get(Failure<E>::error)
 
-fun <T> AonOutcome<T>.expectSuccess() =
+fun <T> Outcome<*, T>.expectSuccess() =
     expectThat(this)
         .isA<Success<T>>()
         .get(Success<T>::value)

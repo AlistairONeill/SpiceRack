@@ -29,13 +29,18 @@ dependencies {
     implementation("org.http4k", "http4k-server-undertow", http4kVersion)
     implementation("org.http4k", "http4k-client-apache", http4kVersion)
 
+    implementation(project(":domain"))
     implementation("com.ubertob.kondor", "kondor-outcome", kondorVersion)
+    implementation("com.ubertob.kondor", "kondor-core", kondorVersion)
 
     testImplementation(kotlin("test"))
     testImplementation(testFixtures(project(":underware")))
     testImplementation("org.http4k", "http4k-testing-strikt", http4kVersion)
     testImplementation("io.strikt", "strikt-core", striktVersion)
 
+    testFixturesImplementation(testFixtures(project(":underware")))
+    testFixturesImplementation(testFixtures(project(":domain")))
     testFixturesImplementation("io.strikt", "strikt-core", striktVersion)
     testFixturesImplementation("com.ubertob.kondor", "kondor-outcome", kondorVersion)
+    testFixturesImplementation("com.ubertob.kondor", "kondor-core", kondorVersion)
 }
