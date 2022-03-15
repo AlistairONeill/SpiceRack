@@ -12,15 +12,20 @@ repositories {
     mavenCentral()
 }
 
+val jSerialCommVersion : String by project
+val kondorVersion : String by project
+val striktVersion : String by project
+
 dependencies {
-    implementation("com.fazecast", "jSerialComm", "2.9.1")
-    implementation("com.ubertob.kondor", "kondor-outcome", "1.7.6")
+
+    implementation("com.fazecast", "jSerialComm", jSerialCommVersion)
+    implementation("com.ubertob.kondor", "kondor-outcome", kondorVersion)
 
     testImplementation(kotlin("test"))
-    testImplementation("io.strikt", "strikt-core", "0.34.1")
+    testImplementation("io.strikt", "strikt-core", striktVersion)
 
-    testFixturesImplementation("io.strikt", "strikt-core", "0.34.1")
-    testFixturesImplementation("com.ubertob.kondor", "kondor-outcome", "1.7.6")
+    testFixturesImplementation("io.strikt", "strikt-core", striktVersion)
+    testFixturesImplementation("com.ubertob.kondor", "kondor-outcome", kondorVersion)
 }
 
 tasks.test {
