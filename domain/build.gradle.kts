@@ -8,13 +8,21 @@ plugins {
 group = "me.alistaironeill"
 version = "1.0-SNAPSHOT"
 
+val jSerialCommVersion : String by project
+val kondorVersion : String by project
+val striktVersion : String by project
+
 repositories {
     mavenCentral()
 }
 
-val jSerialCommVersion : String by project
-val kondorVersion : String by project
-val striktVersion : String by project
+tasks.test {
+    useJUnitPlatform()
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "1.8"
+}
 
 dependencies {
 
@@ -26,12 +34,4 @@ dependencies {
 
     testFixturesImplementation("io.strikt", "strikt-core", striktVersion)
     testFixturesImplementation("com.ubertob.kondor", "kondor-outcome", kondorVersion)
-}
-
-tasks.test {
-    useJUnitPlatform()
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
 }

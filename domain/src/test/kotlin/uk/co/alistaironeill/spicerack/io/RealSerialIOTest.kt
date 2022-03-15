@@ -7,7 +7,6 @@ import strikt.assertions.isEqualTo
 import java.io.IOException
 import java.io.PipedInputStream
 import java.io.PipedOutputStream
-import kotlin.random.Random
 
 class RealSerialIOTest {
     private val outputStream = PipedOutputStream()
