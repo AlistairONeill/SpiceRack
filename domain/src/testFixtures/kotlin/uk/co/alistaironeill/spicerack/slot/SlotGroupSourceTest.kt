@@ -25,7 +25,7 @@ abstract class LedGroupSourceTest {
             val slot = Slot.random()
             val leds = List(3) { Led.random() }
                 .onEach { led ->
-                    source.put(led, slot)
+                    source.add(slot, led)
                         .expectSuccess()
                 }
                 .toSet()
@@ -38,7 +38,7 @@ abstract class LedGroupSourceTest {
         @Test
         fun `does not return leds which have been assigned to a different slot`() {
             repeat(3) {
-                source.put(Led.random(), Slot.random())
+                source.add(Slot.random(), Led.random())
                     .expectSuccess()
             }
 
@@ -55,7 +55,7 @@ abstract class LedGroupSourceTest {
             val led = Led.random()
             val slot = Slot.random()
 
-            source.put(led, slot)
+            source.add(slot, led)
                 .expectSuccess()
 
             source.get(slot)
@@ -70,7 +70,7 @@ abstract class LedGroupSourceTest {
             val first = Slot.random()
             val second = Slot.random()
 
-            source.put(led, first)
+            source.add(first, led)
                 .expectSuccess()
 
             source.get(first)
@@ -82,7 +82,7 @@ abstract class LedGroupSourceTest {
                 .expectSuccess()
                 .isEmpty()
 
-            source.put(led, second)
+            source.add(second, led)
                 .expectSuccess()
 
             source.get(first)
@@ -97,32 +97,48 @@ abstract class LedGroupSourceTest {
     }
 
     @Nested
-    inner class Remove {
+    inner class Clear {
         @Test
-        fun `can remove an led from all slots`() {
-            val led = Led.random()
-            val slot = Slot.random()
+        fun `can clear a slot`() {
+            val slotToClear = Slot.random()
+            val ledsToClear = List(3) { Led.random() }
+                .onEach { led ->
+                    source.add(slotToClear, led)
+                        .expectSuccess()
+                }
+                .toSet()
 
-            source.put(led, slot)
+            val slotToRemain = Slot.random()
+            val ledsToRemain = List(3) { Led.random() }
+                .onEach { led ->
+                    source.add(slotToRemain, led)
+                        .expectSuccess()
+                }
+                .toSet()
+
+            source.get(slotToClear)
+                .expectSuccess()
+                .isEqualTo(ledsToClear)
+
+            source.get(slotToRemain)
+                .expectSuccess()
+                .isEqualTo(ledsToRemain)
+
+            source.clear(slotToClear)
                 .expectSuccess()
 
-            source.get(slot)
+            source.get(slotToClear)
                 .expectSuccess()
-                .single()
-                .isEqualTo(led)
+                .isEmpty()
 
-            source.remove(led)
+            source.get(slotToRemain)
                 .expectSuccess()
-
-            source.get(slot)
-                .expectSuccess()
-                .single()
-                .isEqualTo(led)
+                .isEqualTo(ledsToRemain)
         }
 
         @Test
-        fun `attempting to remove an unassigned led does not return an error`() {
-            source.remove(Led.random())
+        fun `attempting to clear a slot without assigned leds does not return an error`() {
+            source.clear(Slot.random())
                 .expectSuccess()
         }
     }
@@ -142,7 +158,7 @@ abstract class LedGroupSourceTest {
                 .associateWith { slot ->
                     List(10) { Led.random() }
                         .onEach { led ->
-                            source.put(led, slot)
+                            source.add(slot, led)
                                 .expectSuccess()
                         }
                         .toSet()

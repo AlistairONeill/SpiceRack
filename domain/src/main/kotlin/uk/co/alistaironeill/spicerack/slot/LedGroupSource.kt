@@ -5,7 +5,7 @@ import uk.co.alistaironeill.spicerack.error.UnitOutcome
 
 interface LedGroupSource {
     fun get(slot: Slot): AonOutcome<Set<Led>>
-    fun put(led: Led, slot: Slot): UnitOutcome
-    fun remove(led: Led): UnitOutcome
+    fun add(slot: Slot, led: Led): UnitOutcome
+    fun clear(slot: Slot): UnitOutcome
     fun get(): AonOutcome<Map<Slot, Set<Led>>>
 }
