@@ -26,6 +26,7 @@ tasks.withType<KotlinCompile> {
 
 dependencies {
     implementation("org.http4k", "http4k-core", http4kVersion)
+    implementation("org.http4k", "http4k-contract", http4kVersion)
     implementation("org.http4k", "http4k-server-undertow", http4kVersion)
     implementation("org.http4k", "http4k-client-apache", http4kVersion)
 
@@ -42,6 +43,10 @@ dependencies {
 
     testFixturesImplementation(testFixtures(project(":underware")))
     testFixturesImplementation(testFixtures(project(":domain")))
+    testFixturesImplementation("org.http4k", "http4k-core", http4kVersion)
+    testFixturesImplementation("org.http4k", "http4k-contract", http4kVersion)
+    testFixturesImplementation("org.http4k", "http4k-server-undertow", http4kVersion)
+    testFixturesImplementation("org.http4k", "http4k-client-apache", http4kVersion)
     testFixturesImplementation("io.strikt", "strikt-core", striktVersion)
     testFixturesImplementation("com.ubertob.kondor", "kondor-outcome", kondorVersion)
     testFixturesImplementation("com.ubertob.kondor", "kondor-core", kondorVersion)

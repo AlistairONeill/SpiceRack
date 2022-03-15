@@ -3,12 +3,15 @@ package uk.co.alistaironeill.spicerack.error
 import com.ubertob.kondor.json.ObjectNodeConverter
 import com.ubertob.kondor.outcome.Outcome
 import com.ubertob.kondor.outcome.OutcomeError
+import com.ubertob.kondor.outcome.bind
 import com.ubertob.kondor.outcome.recover
+import org.http4k.core.ContentType.Companion.APPLICATION_JSON
 import org.http4k.core.Response
 import org.http4k.core.Status
 import org.http4k.core.Status.Companion.BAD_REQUEST
 import org.http4k.core.Status.Companion.NOT_FOUND
 import org.http4k.core.Status.Companion.OK
+import org.http4k.lens.BodyLens
 
 sealed interface HttpError : OutcomeError
 
@@ -19,6 +22,14 @@ data class ActionError(val cause: AonError): HttpError {
 }
 
 typealias HttpOutcome<T> = Outcome<HttpError, T>
+
+fun <I, O> HttpOutcome<I>.perform(block: I.() -> AonOutcome<O>): HttpOutcome<O> =
+    bind {
+        it.block().transformFailure(::ActionError)
+    }
+
+fun <T> perform(block: () -> AonOutcome<T>): HttpOutcome<T> =
+    block().transformFailure(::ActionError)
 
 fun HttpOutcome<Unit>.toResponse(): Response =
     transform { Response(OK) }
@@ -49,3 +60,13 @@ private val AonError.status get() = when (this) {
     is NotFound -> NOT_FOUND
     is UnexpectedError -> Status(code, message)
 }
+
+fun <T: Any> ObjectNodeConverter<T>.toLens() =
+    BodyLens<HttpOutcome<T>>(
+        emptyList(),
+        APPLICATION_JSON
+    ) { message ->
+        message.bodyString()
+            .let(this::fromJson)
+            .transformFailure { InputError(it.msg) }
+    }

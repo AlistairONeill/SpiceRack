@@ -33,6 +33,9 @@ dependencies {
     testImplementation("io.strikt", "strikt-core", striktVersion)
     testImplementation(testFixtures(project("::underware")))
 
+    testFixturesImplementation("org.junit.jupiter:junit-jupiter-api:5.3.1")
+
+    testFixturesImplementation(kotlin("test"))
     testFixturesImplementation(project("::underware"))
     testFixturesImplementation(testFixtures(project("::underware")))
     testFixturesImplementation("io.strikt", "strikt-core", striktVersion)

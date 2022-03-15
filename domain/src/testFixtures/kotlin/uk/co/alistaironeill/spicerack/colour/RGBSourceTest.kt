@@ -8,6 +8,7 @@ import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.outcome.expectFailure
 import uk.co.alistaironeill.spicerack.outcome.expectSuccess
 
+@Suppress("FunctionName")
 abstract class RGBSourceTest {
     protected abstract val source: RGBSource
 
