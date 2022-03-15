@@ -25,16 +25,13 @@ tasks.withType<KotlinCompile> {
 }
 
 dependencies {
-    implementation(project("::underware"))
+
     implementation("com.fazecast", "jSerialComm", jSerialCommVersion)
     implementation("com.ubertob.kondor", "kondor-outcome", kondorVersion)
 
     testImplementation(kotlin("test"))
     testImplementation("io.strikt", "strikt-core", striktVersion)
-    testImplementation(testFixtures(project("::underware")))
 
-    testFixturesImplementation(project("::underware"))
-    testFixturesImplementation(testFixtures(project("::underware")))
     testFixturesImplementation("io.strikt", "strikt-core", striktVersion)
     testFixturesImplementation("com.ubertob.kondor", "kondor-outcome", kondorVersion)
 }

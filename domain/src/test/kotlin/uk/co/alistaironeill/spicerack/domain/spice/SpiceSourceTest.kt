@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test
 import strikt.assertions.contains
 import strikt.assertions.isEmpty
 import strikt.assertions.isEqualTo
-import uk.co.alistaironeill.spicerack.domain.error.AlreadyExists
-import uk.co.alistaironeill.spicerack.domain.error.NotFound
-import uk.co.alistaironeill.spicerack.domain.error.expectFailure
-import uk.co.alistaironeill.spicerack.domain.error.expectSuccess
+import uk.co.alistaironeill.spicerack.error.AlreadyExists
+import uk.co.alistaironeill.spicerack.error.NotFound
+import uk.co.alistaironeill.spicerack.outcome.expectFailure
+import uk.co.alistaironeill.spicerack.outcome.expectSuccess
 
 abstract class SpiceSourceTest {
     abstract val source: SpiceSource

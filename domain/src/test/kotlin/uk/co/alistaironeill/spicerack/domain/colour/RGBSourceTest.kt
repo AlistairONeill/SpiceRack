@@ -3,9 +3,9 @@ package uk.co.alistaironeill.spicerack.domain.colour
 import org.junit.jupiter.api.Test
 import strikt.assertions.isEqualTo
 import uk.co.alistaironeill.spicerack.domain.colour.Colour.GREEN
-import uk.co.alistaironeill.spicerack.domain.error.NotFound
-import uk.co.alistaironeill.spicerack.domain.error.expectFailure
-import uk.co.alistaironeill.spicerack.domain.error.expectSuccess
+import uk.co.alistaironeill.spicerack.error.NotFound
+import uk.co.alistaironeill.spicerack.outcome.expectFailure
+import uk.co.alistaironeill.spicerack.outcome.expectSuccess
 
 abstract class RGBSourceTest {
     protected abstract val source: RGBSource

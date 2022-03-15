@@ -1,7 +1,7 @@
 package uk.co.alistaironeill.spicerack.domain.spice
 
-import uk.co.alistaironeill.spicerack.domain.error.AonOutcome
-import uk.co.alistaironeill.spicerack.domain.error.UnitOutcome
+import uk.co.alistaironeill.spicerack.error.AonOutcome
+import uk.co.alistaironeill.spicerack.error.UnitOutcome
 
 interface SpiceSource {
     fun get(id: SpiceId): AonOutcome<Spice>

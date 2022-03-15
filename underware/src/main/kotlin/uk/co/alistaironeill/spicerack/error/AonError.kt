@@ -1,4 +1,4 @@
-package uk.co.alistaironeill.spicerack.domain.error
+package uk.co.alistaironeill.spicerack.error
 
 import com.ubertob.kondor.outcome.OutcomeError
 

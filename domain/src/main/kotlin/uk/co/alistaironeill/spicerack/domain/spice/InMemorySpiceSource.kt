@@ -1,10 +1,10 @@
 package uk.co.alistaironeill.spicerack.domain.spice
 
 import com.ubertob.kondor.outcome.*
-import uk.co.alistaironeill.spicerack.domain.error.AlreadyExists
-import uk.co.alistaironeill.spicerack.domain.error.AonOutcome
-import uk.co.alistaironeill.spicerack.domain.error.NotFound
-import uk.co.alistaironeill.spicerack.domain.error.UnitOutcome
+import uk.co.alistaironeill.spicerack.error.AlreadyExists
+import uk.co.alistaironeill.spicerack.error.AonOutcome
+import uk.co.alistaironeill.spicerack.error.NotFound
+import uk.co.alistaironeill.spicerack.error.UnitOutcome
 
 class InMemorySpiceSource : SpiceSource {
     private val spices = mutableMapOf<SpiceId, Spice>()
