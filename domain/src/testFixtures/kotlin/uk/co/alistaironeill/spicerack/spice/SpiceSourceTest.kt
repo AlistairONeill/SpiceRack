@@ -1,3 +1,5 @@
+@file:Suppress("FunctionName")
+
 package uk.co.alistaironeill.spicerack.spice
 
 import org.junit.jupiter.api.Nested

@@ -14,9 +14,8 @@ import uk.co.alistaironeill.spicerack.http.asHttpHandler
 import uk.co.alistaironeill.spicerack.outcome.expectFailure
 
 class HttpRGBSourceTest : RGBSourceTest() {
-    private val delegate = InMemoryRGBSource()
 
-    override val source = delegate
+    override val source = InMemoryRGBSource()
         .toContractRoutes()
         .asHttpHandler()
         .let(::HttpRGBSource)
