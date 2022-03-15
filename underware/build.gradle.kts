@@ -31,4 +31,5 @@ dependencies {
 
     testFixturesImplementation("io.strikt", "strikt-core", striktVersion)
     testFixturesImplementation("com.ubertob.kondor", "kondor-outcome", kondorVersion)
+    implementation(kotlin("reflect"))
 }
