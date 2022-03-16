@@ -17,6 +17,30 @@ abstract class SpiceSourceTest {
     abstract val source: SpiceSource
 
     @Nested
+    inner class Get {
+        @Test
+        fun `returns empty set when nothing present`() {
+            source.get()
+                .expectSuccess()
+                .isEmpty()
+        }
+
+        @Test
+        fun `returns all spices`() {
+            val expected = List(3) { SpiceName.random() }
+                .map { name ->
+                    val aliases = List(3) { SpiceName.random() }.toSet()
+                    val id = source.put(name, aliases)
+                    Spice(id, name, aliases)
+                }.toSet()
+
+            source.get()
+                .expectSuccess()
+                .isEqualTo(expected)
+        }
+    }
+
+    @Nested
     inner class GetById {
         @Test
         fun `returns spice for id`() {

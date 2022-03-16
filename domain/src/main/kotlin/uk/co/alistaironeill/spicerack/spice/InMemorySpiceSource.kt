@@ -9,6 +9,11 @@ import uk.co.alistaironeill.spicerack.error.UnitOutcome
 class InMemorySpiceSource : SpiceSource {
     private val spices = mutableMapOf<SpiceId, Spice>()
 
+    override fun get(): AonOutcome<Set<Spice>> =
+        spices.values
+            .toSet()
+            .asSuccess()
+
     override fun get(id: SpiceId): AonOutcome<Spice> =
         spices[id].failIfNull { NotFound(id) }
 

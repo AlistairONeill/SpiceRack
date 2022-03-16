@@ -1,5 +1,6 @@
 package uk.co.alistaironeill.spicerack.spice
 
+import com.ubertob.kondor.json.JSet
 import org.http4k.contract.ContractRoute
 import org.http4k.contract.div
 import org.http4k.contract.meta
@@ -18,6 +19,7 @@ object SpiceSourceHttpHandler {
 
     fun SpiceSource.toContractRoutes(): List<ContractRoute> =
         listOf(
+            getAll(),
             getById(),
             getByName(),
             create(),
@@ -25,6 +27,14 @@ object SpiceSourceHttpHandler {
             removeAlias(),
             remove()
         )
+
+    private fun SpiceSource.getAll() =
+        SPICE_PATH meta {
+
+        } bindContract GET to { _ ->
+            perform { get() }
+                .toResponse(JSet(JSpice))
+        }
 
     private fun SpiceSource.getById() =
         SPICE_PATH / idPath meta {

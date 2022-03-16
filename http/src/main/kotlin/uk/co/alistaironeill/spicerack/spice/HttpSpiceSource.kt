@@ -1,5 +1,6 @@
 package uk.co.alistaironeill.spicerack.spice
 
+import com.ubertob.kondor.json.JSet
 import org.http4k.core.HttpHandler
 import org.http4k.core.Method.*
 import org.http4k.core.Request
@@ -10,6 +11,10 @@ import uk.co.alistaironeill.spicerack.spice.SpiceSourceHttpHandler.SPICE_NAME_PA
 import uk.co.alistaironeill.spicerack.spice.SpiceSourceHttpHandler.SPICE_PATH
 
 class HttpSpiceSource(private val handler: HttpHandler): SpiceSource {
+    override fun get(): AonOutcome<Set<Spice>> =
+        Request(GET, SPICE_PATH)
+            .run(handler)
+            .handle(JSet(JSpice))
 
     override fun get(id: SpiceId): AonOutcome<Spice> =
         Request(GET, "$SPICE_PATH/${id.value}")
