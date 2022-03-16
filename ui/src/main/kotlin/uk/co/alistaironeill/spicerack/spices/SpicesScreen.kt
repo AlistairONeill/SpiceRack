@@ -15,6 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.ubertob.kondor.outcome.recover
+import uk.co.alistaironeill.spicerack.error.orAlert
 import uk.co.alistaironeill.spicerack.reusable.AddTextWidget
 import uk.co.alistaironeill.spicerack.spice.Spice
 import uk.co.alistaironeill.spicerack.spice.SpiceId
@@ -34,7 +36,7 @@ fun SpicesScreen(source: SpiceSource) {
         ) {
             Box(Modifier.weight(0.5f)) {
                 AddTextWidget("Add Spice") { spiceName ->
-                    source.create(SpiceName(spiceName)).orThrow()
+                    source.create(SpiceName(spiceName)).orAlert()
                     refresh()
                 }
             }
@@ -60,7 +62,8 @@ fun SpicesScreen(source: SpiceSource) {
 
         LazyColumn(Modifier.fillMaxSize()) {
             val ids = source.get()
-                .orThrow()
+                .orAlert()
+                .recover { emptySet() }
                 .filter(matches(search.value))
                 .map(Spice::id)
 
@@ -90,8 +93,7 @@ fun SpiceCard(
 ) {
     val i = remember { mutableStateOf(0) }
     val innerRefresh: () -> Unit = { i.value += 1 }
-    val spice = source.get(id).orThrow()
-    val nameToAdd = remember { mutableStateOf("") }
+    val spice = source.get(id).orAlert().recover { null }
     val j = i.value
 
     Card(
@@ -100,42 +102,44 @@ fun SpiceCard(
             .padding(15.dp),
         elevation = 10.dp
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Row(
-                Modifier.fillMaxWidth(),
-                Arrangement.SpaceBetween
+        if (spice != null) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
             ) {
-                Text(spice.id.value)
-                Icon(
-                    Icons.Default.Delete,
-                    "Delete Spice",
-                    Modifier.clickable {
-                        source.remove(id).orThrow()
-                        outerRefresh()
-                    }.padding(end = 8.dp)
-                )
-            }
+                Row(
+                    Modifier.fillMaxWidth(),
+                    Arrangement.SpaceBetween
+                ) {
+                    Text(spice.id.value)
+                    Icon(
+                        Icons.Default.Delete,
+                        "Delete Spice",
+                        Modifier.clickable {
+                            source.remove(id).orAlert()
+                            outerRefresh()
+                        }.padding(end = 8.dp)
+                    )
+                }
 
-            Divider(Modifier.height(2.dp).fillMaxWidth())
+                Divider(Modifier.height(2.dp).fillMaxWidth())
 
-            Row(Modifier.fillMaxWidth()) {
-                Spacer(Modifier.weight(3f))
-                Divider(Modifier.width(2.dp))
-                Column(Modifier.weight(7f)) {
-                    Text(spice.name.value, Modifier.align(Alignment.CenterHorizontally))
-                    Divider(Modifier.height(2.dp))
-                    spice.aliases.forEach { alias ->
-                        Text(alias.value, Modifier.align(Alignment.CenterHorizontally))
-                    }
-                    AddTextWidget(
-                        "Add Alias",
-                    ) { alias ->
-                        source.addAlias(id, SpiceName(alias)).orThrow()
-                        innerRefresh()
+                Row(Modifier.fillMaxWidth()) {
+                    Spacer(Modifier.weight(3f))
+                    Divider(Modifier.width(2.dp))
+                    Column(Modifier.weight(7f)) {
+                        Text(spice.name.value, Modifier.align(Alignment.CenterHorizontally))
+                        Divider(Modifier.height(2.dp))
+                        spice.aliases.forEach { alias ->
+                            Text(alias.value, Modifier.align(Alignment.CenterHorizontally))
+                        }
+                        AddTextWidget(
+                            "Add Alias",
+                        ) { alias ->
+                            source.addAlias(id, SpiceName(alias)).orAlert()
+                            innerRefresh()
+                        }
                     }
                 }
             }

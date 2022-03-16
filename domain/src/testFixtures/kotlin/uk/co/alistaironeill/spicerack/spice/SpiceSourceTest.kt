@@ -272,7 +272,8 @@ abstract class SpiceSourceTest {
 
     private fun SpiceSource.put(name: SpiceName, aliases: Set<SpiceName>) : SpiceId =
         create(name)
-            .orThrow()
+            .expectSuccess()
+            .subject
             .id
             .also { id -> aliases.forEach { addAlias(id, it) } }
 }
