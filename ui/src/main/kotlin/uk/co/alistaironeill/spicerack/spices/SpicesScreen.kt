@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.ubertob.kondor.outcome.recover
 import uk.co.alistaironeill.spicerack.error.orAlert
 import uk.co.alistaironeill.spicerack.reusable.AddTextWidget
 import uk.co.alistaironeill.spicerack.spice.Spice
@@ -36,7 +35,7 @@ fun SpicesScreen(source: SpiceSource) {
         ) {
             Box(Modifier.weight(0.5f)) {
                 AddTextWidget("Add Spice") { spiceName ->
-                    source.create(SpiceName(spiceName)).orAlert()
+                    source.create(SpiceName(spiceName)).orAlert { }
                     refresh()
                 }
             }
@@ -62,8 +61,7 @@ fun SpicesScreen(source: SpiceSource) {
 
         LazyColumn(Modifier.fillMaxSize()) {
             val ids = source.get()
-                .orAlert()
-                .recover { emptySet() }
+                .orAlert { emptySet() }
                 .filter(matches(search.value))
                 .map(Spice::id)
 
@@ -93,7 +91,7 @@ fun SpiceCard(
 ) {
     val i = remember { mutableStateOf(0) }
     val innerRefresh: () -> Unit = { i.value += 1 }
-    val spice = source.get(id).orAlert().recover { null }
+    val spice = source.get(id).orAlert { null }
     val j = i.value
 
     Card(
@@ -117,7 +115,7 @@ fun SpiceCard(
                         Icons.Default.Delete,
                         "Delete Spice",
                         Modifier.clickable {
-                            source.remove(id).orAlert()
+                            source.remove(id).orAlert { }
                             outerRefresh()
                         }.padding(end = 8.dp)
                     )
@@ -137,7 +135,7 @@ fun SpiceCard(
                         AddTextWidget(
                             "Add Alias",
                         ) { alias ->
-                            source.addAlias(id, SpiceName(alias)).orAlert()
+                            source.addAlias(id, SpiceName(alias)).orAlert { }
                             innerRefresh()
                         }
                     }
