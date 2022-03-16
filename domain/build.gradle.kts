@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.10"
+    kotlin("jvm")
     `java-test-fixtures`
 }
 
@@ -33,7 +33,7 @@ dependencies {
     testImplementation("io.strikt", "strikt-core", striktVersion)
     testImplementation(testFixtures(project("::underware")))
 
-    testFixturesImplementation("org.junit.jupiter:junit-jupiter-api:5.3.1")
+    testFixturesImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
 
     testFixturesImplementation(kotlin("test"))
     testFixturesImplementation(project("::underware"))
