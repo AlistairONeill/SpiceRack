@@ -1,6 +1,8 @@
 package uk.co.alistaironeill.spicerack.spice
 
 import org.junit.jupiter.api.Test
+import uk.co.alistaironeill.spicerack.colour.RGB
+import uk.co.alistaironeill.spicerack.domain.colour.random
 import uk.co.alistaironeill.spicerack.domain.spice.random
 import uk.co.alistaironeill.spicerack.json.expectRoundTrips
 import uk.co.alistaironeill.spicerack.spice.SpiceUpdate.*
@@ -30,6 +32,15 @@ class JSpiceUpdateTest {
             .let(::RemoveAlias)
             .run {
                 expectRoundTrips(JSpiceUpdate.JRemoveAlias)
+                expectRoundTrips(JSpiceUpdate)
+            }
+
+    @Test
+    fun `can round trip a set colour`() =
+        RGB.random()
+            .let(::SetColour)
+            .run {
+                expectRoundTrips(JSpiceUpdate.JSetColour)
                 expectRoundTrips(JSpiceUpdate)
             }
 }

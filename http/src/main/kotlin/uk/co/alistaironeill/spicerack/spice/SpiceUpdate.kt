@@ -1,7 +1,10 @@
 package uk.co.alistaironeill.spicerack.spice
 
+import uk.co.alistaironeill.spicerack.colour.RGB
+
 sealed interface SpiceUpdate {
     data class Rename(val name: SpiceName) : SpiceUpdate
     data class AddAlias(val alias: SpiceName) : SpiceUpdate
     data class RemoveAlias(val alias: SpiceName) : SpiceUpdate
+    data class SetColour(val colour: RGB): SpiceUpdate
 }

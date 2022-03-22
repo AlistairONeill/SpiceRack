@@ -8,6 +8,7 @@ import strikt.assertions.contains
 import strikt.assertions.isEmpty
 import strikt.assertions.isEqualTo
 import uk.co.alistaironeill.spicerack.colour.RGB
+import uk.co.alistaironeill.spicerack.domain.colour.random
 import uk.co.alistaironeill.spicerack.domain.spice.random
 import uk.co.alistaironeill.spicerack.error.BadRequest.AlreadyExists
 import uk.co.alistaironeill.spicerack.error.NotFound
@@ -311,7 +312,34 @@ abstract class SpiceSourceTest {
         }
     }
 
-    private fun SpiceSource.put(name: SpiceName, aliases: Set<SpiceName> = emptySet()) : SpiceId =
+    @Nested
+    inner class SetColour {
+        @Test
+        fun `can set the colour of a spice`() {
+            val id = source.put()
+            val newColour = RGB.random()
+
+            source.setColour(id, newColour)
+                .expectSuccess()
+
+            source.get(id)
+                .expectSuccess()
+                .get { this.colour }.isEqualTo(newColour)
+        }
+
+        @Test
+        fun `returns not found if the spice does not exist`() {
+            val id = SpiceId.mint()
+            source.setColour(id, RGB.random())
+                .expectFailure()
+                .isEqualTo(NotFound(id))
+        }
+    }
+
+    private fun SpiceSource.put(
+        name: SpiceName = SpiceName.random(),
+        aliases: Set<SpiceName> = emptySet()
+    ) : SpiceId =
         create(name)
             .expectSuccess()
             .subject

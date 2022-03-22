@@ -4,6 +4,7 @@ import com.ubertob.kondor.json.JSet
 import org.http4k.core.HttpHandler
 import org.http4k.core.Method.*
 import org.http4k.core.Request
+import uk.co.alistaironeill.spicerack.colour.RGB
 import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
 import uk.co.alistaironeill.spicerack.http.bodyAsJson
@@ -41,6 +42,9 @@ class HttpSpiceSource(private val handler: HttpHandler): SpiceSource {
 
     override fun rename(id: SpiceId, name: SpiceName): UnitOutcome =
         id.post(Rename(name))
+
+    override fun setColour(id: SpiceId, colour: RGB): UnitOutcome =
+        id.post(SetColour(colour))
 
     override fun delete(id: SpiceId): UnitOutcome =
         Request(DELETE, "$SPICE_PATH/${id.value}")

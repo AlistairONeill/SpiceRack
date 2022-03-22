@@ -1,5 +1,6 @@
 package uk.co.alistaironeill.spicerack.spice
 
+import uk.co.alistaironeill.spicerack.colour.RGB
 import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
 
@@ -11,5 +12,6 @@ interface SpiceSource {
     fun addAlias(id: SpiceId, name: SpiceName): UnitOutcome
     fun removeAlias(id: SpiceId, name: SpiceName): UnitOutcome
     fun rename(id: SpiceId, name: SpiceName): UnitOutcome
+    fun setColour(id: SpiceId, colour: RGB): UnitOutcome
     fun delete(id: SpiceId): UnitOutcome
 }

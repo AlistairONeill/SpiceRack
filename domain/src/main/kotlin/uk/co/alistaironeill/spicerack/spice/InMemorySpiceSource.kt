@@ -29,23 +29,21 @@ class InMemorySpiceSource : SpiceSource {
 
     override fun addAlias(id: SpiceId, name: SpiceName): UnitOutcome =
         failIfExists(name)
-            .bind { get(id) }
-            .transform(withAlias(name))
-            .withSuccess(::put)
-            .transform{}
+            .bind {
+                id.update(withAlias(name))
+            }
 
     override fun removeAlias(id: SpiceId, name: SpiceName): UnitOutcome =
-        get(id)
-            .bind(withoutAlias(name))
-            .withSuccess(::put)
-            .transform { }
+        id.update(withoutAlias(name))
 
     override fun rename(id: SpiceId, name: SpiceName): UnitOutcome =
         failIfExists(name)
-            .bind { get(id) }
-            .transform(withName(name))
-            .withSuccess(::put)
-            .transform { }
+            .bind {
+                id.update(withName(name))
+            }
+
+    override fun setColour(id: SpiceId, colour: RGB): UnitOutcome =
+        id.update(withColour(colour))
 
     override fun delete(id: SpiceId): UnitOutcome =
         get(id)
@@ -62,15 +60,20 @@ class InMemorySpiceSource : SpiceSource {
             ?.asFailure()
             ?: name.asSuccess()
 
-    private fun withName(name: SpiceName): Spice.() -> Spice = {
-        copy(name = name)
+     private fun SpiceId.update(fn: SpiceMutator): UnitOutcome =
+        get(this)
+            .bind(fn)
+            .put()
+
+    private fun withName(name: SpiceName): SpiceMutator = {
+        copy(name = name).asSuccess()
     }
 
-    private fun withAlias(name: SpiceName): Spice.() -> Spice = {
-        copy(aliases = aliases + name)
+    private fun withAlias(name: SpiceName): SpiceMutator = {
+        copy(aliases = aliases + name).asSuccess()
     }
 
-    private fun withoutAlias(name: SpiceName): Spice.() -> AonOutcome<Spice> = {
+    private fun withoutAlias(name: SpiceName): SpiceMutator = {
         if (aliases.contains(name)) {
             copy(aliases = aliases.minus(name))
                 .asSuccess()
@@ -78,6 +81,10 @@ class InMemorySpiceSource : SpiceSource {
             NotFound(name, id)
                 .asFailure()
         }
+    }
+
+    private fun withColour(colour: RGB): SpiceMutator = {
+        copy(colour = colour).asSuccess()
     }
 
     private fun factory(name: SpiceName): Spice = Spice(
@@ -91,7 +98,13 @@ class InMemorySpiceSource : SpiceSource {
         spice.name == name || spice.aliases.contains(name)
     }
 
+    private fun AonOutcome<Spice>.put() : UnitOutcome =
+        withSuccess(::put)
+            .transform {  }
+
     private fun put(spice: Spice) {
         spices[spice.id] = spice
     }
 }
+
+private typealias SpiceMutator = Spice.() -> AonOutcome<Spice>

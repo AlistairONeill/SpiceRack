@@ -83,6 +83,7 @@ object SpiceSourceHttpHandler {
             is SpiceUpdate.AddAlias -> addAlias(id, update.alias)
             is SpiceUpdate.RemoveAlias -> removeAlias(id, update.alias)
             is SpiceUpdate.Rename -> rename(id, update.name)
+            is SpiceUpdate.SetColour -> setColour(id, update.colour)
         }
 
     private fun SpiceSource.remove() =
