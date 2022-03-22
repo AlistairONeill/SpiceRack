@@ -1,6 +1,7 @@
 package uk.co.alistaironeill.spicerack.spice
 
 import com.ubertob.kondor.outcome.*
+import uk.co.alistaironeill.spicerack.colour.RGB
 import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.BadRequest.AlreadyExists
 import uk.co.alistaironeill.spicerack.error.NotFound
@@ -79,7 +80,12 @@ class InMemorySpiceSource : SpiceSource {
         }
     }
 
-    private fun factory(name: SpiceName): Spice = Spice(SpiceId.mint(), name, emptySet())
+    private fun factory(name: SpiceName): Spice = Spice(
+        SpiceId.mint(),
+        name,
+        emptySet(),
+        RGB.Default
+    )
 
     private fun canBeCalled(name: SpiceName): (Spice) -> Boolean = { spice ->
         spice.name == name || spice.aliases.contains(name)

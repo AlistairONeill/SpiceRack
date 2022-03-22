@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test
 import strikt.assertions.contains
 import strikt.assertions.isEmpty
 import strikt.assertions.isEqualTo
+import uk.co.alistaironeill.spicerack.colour.RGB
 import uk.co.alistaironeill.spicerack.domain.spice.random
 import uk.co.alistaironeill.spicerack.error.BadRequest.AlreadyExists
 import uk.co.alistaironeill.spicerack.error.NotFound
@@ -31,7 +32,7 @@ abstract class SpiceSourceTest {
                 .map { name ->
                     val aliases = List(3) { SpiceName.random() }.toSet()
                     val id = source.put(name, aliases)
-                    Spice(id, name, aliases)
+                    Spice(id, name, aliases, RGB.Default)
                 }.toSet()
 
             source.get()
@@ -51,7 +52,11 @@ abstract class SpiceSourceTest {
 
             source.get(id)
                 .expectSuccess()
-                .isEqualTo(Spice(id, name, aliases))
+                .and {
+                    get { this.id }.isEqualTo(id)
+                    get { this.name }.isEqualTo(name)
+                    get { this.aliases }.isEqualTo(aliases)
+                }
         }
 
         @Test
