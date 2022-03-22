@@ -1,4 +1,4 @@
-package uk.co.alistaironeill.spicerack.colour
+package uk.co.alistaironeill.spicerack.spice
 
 import com.ubertob.kondor.json.JAny
 import com.ubertob.kondor.json.jsonnode.JsonNodeObject

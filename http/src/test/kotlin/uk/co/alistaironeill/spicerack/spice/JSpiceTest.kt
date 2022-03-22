@@ -1,7 +1,6 @@
 package uk.co.alistaironeill.spicerack.spice
 
 import org.junit.jupiter.api.Test
-import uk.co.alistaironeill.spicerack.colour.RGB
 import uk.co.alistaironeill.spicerack.domain.colour.random
 import uk.co.alistaironeill.spicerack.domain.spice.random
 import uk.co.alistaironeill.spicerack.json.expectRoundTrips

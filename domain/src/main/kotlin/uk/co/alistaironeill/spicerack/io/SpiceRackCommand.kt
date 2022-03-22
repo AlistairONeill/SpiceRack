@@ -1,8 +1,8 @@
 package uk.co.alistaironeill.spicerack.io
 
-import uk.co.alistaironeill.spicerack.colour.RGB
 import uk.co.alistaironeill.spicerack.io.SpiceRackCommand.Direct.*
 import uk.co.alistaironeill.spicerack.slot.Led
+import uk.co.alistaironeill.spicerack.spice.RGB
 
 sealed interface SpiceRackCommand {
     val serialCommands : List<SerialCommand>

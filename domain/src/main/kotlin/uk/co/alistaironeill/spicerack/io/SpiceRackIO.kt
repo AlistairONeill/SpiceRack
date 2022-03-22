@@ -1,7 +1,7 @@
 package uk.co.alistaironeill.spicerack.io
 
-import uk.co.alistaironeill.spicerack.colour.RGB
 import uk.co.alistaironeill.spicerack.slot.Led
+import uk.co.alistaironeill.spicerack.spice.RGB
 
 class SpiceRackIO(private val serialIO: SerialIO) {
 

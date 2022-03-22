@@ -5,7 +5,6 @@ import com.ubertob.kondor.json.JSealed
 import com.ubertob.kondor.json.ObjectNodeConverter
 import com.ubertob.kondor.json.jsonnode.JsonNodeObject
 import com.ubertob.kondor.json.obj
-import uk.co.alistaironeill.spicerack.colour.JRGB
 import uk.co.alistaironeill.spicerack.json.str
 import uk.co.alistaironeill.spicerack.spice.SpiceUpdate.*
 

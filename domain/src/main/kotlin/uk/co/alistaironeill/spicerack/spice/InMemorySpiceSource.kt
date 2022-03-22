@@ -1,7 +1,6 @@
 package uk.co.alistaironeill.spicerack.spice
 
 import com.ubertob.kondor.outcome.*
-import uk.co.alistaironeill.spicerack.colour.RGB
 import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.BadRequest.AlreadyExists
 import uk.co.alistaironeill.spicerack.error.NotFound

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test
 import strikt.assertions.contains
 import strikt.assertions.isEmpty
 import strikt.assertions.isEqualTo
-import uk.co.alistaironeill.spicerack.colour.RGB
 import uk.co.alistaironeill.spicerack.domain.colour.random
 import uk.co.alistaironeill.spicerack.domain.spice.random
 import uk.co.alistaironeill.spicerack.error.BadRequest.AlreadyExists

@@ -4,7 +4,6 @@ import com.ubertob.kondor.json.JAny
 import com.ubertob.kondor.json.array
 import com.ubertob.kondor.json.jsonnode.JsonNodeObject
 import com.ubertob.kondor.json.obj
-import uk.co.alistaironeill.spicerack.colour.JRGB
 import uk.co.alistaironeill.spicerack.json.str
 
 object JSpice : JAny<Spice>() {

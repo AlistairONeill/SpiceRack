@@ -4,7 +4,6 @@ import com.ubertob.kondor.json.JSet
 import org.http4k.core.HttpHandler
 import org.http4k.core.Method.*
 import org.http4k.core.Request
-import uk.co.alistaironeill.spicerack.colour.RGB
 import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
 import uk.co.alistaironeill.spicerack.http.bodyAsJson
