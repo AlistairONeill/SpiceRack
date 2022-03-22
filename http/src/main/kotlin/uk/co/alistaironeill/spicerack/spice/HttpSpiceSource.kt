@@ -41,7 +41,7 @@ class HttpSpiceSource(private val handler: HttpHandler): SpiceSource {
             .run(handler)
             .handle()
 
-    override fun remove(id: SpiceId): UnitOutcome =
+    override fun delete(id: SpiceId): UnitOutcome =
         Request(DELETE, "$SPICE_PATH/${id.value}")
             .run(handler)
             .handle()

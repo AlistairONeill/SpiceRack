@@ -246,12 +246,12 @@ abstract class SpiceSourceTest {
     }
 
     @Nested
-    inner class Remove {
+    inner class Delete {
         @Test
-        fun `can remove a spice`() {
+        fun `can delete a spice`() {
             val id = source.put(SpiceName.random())
 
-            source.remove(id).expectSuccess()
+            source.delete(id).expectSuccess()
 
             source.get(id)
                 .expectFailure()
@@ -262,7 +262,7 @@ abstract class SpiceSourceTest {
         fun `returns not found for an unknown spice id`() {
             val id = SpiceId.mint()
 
-            source.remove(id)
+            source.delete(id)
                 .expectFailure()
                 .isEqualTo(NotFound(id))
         }

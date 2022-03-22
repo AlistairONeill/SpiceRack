@@ -91,7 +91,7 @@ object SpiceSourceHttpHandler {
 
         } bindContract DELETE to { id ->
             {
-                perform { remove(id) }
+                perform { delete(id) }
                     .toResponse()
             }
         }

@@ -10,5 +10,5 @@ interface SpiceSource {
     fun create(name: SpiceName): AonOutcome<Spice>
     fun addAlias(id: SpiceId, name: SpiceName): UnitOutcome
     fun removeAlias(id: SpiceId, name: SpiceName): UnitOutcome
-    fun remove(id: SpiceId): UnitOutcome
+    fun delete(id: SpiceId): UnitOutcome
 }

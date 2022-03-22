@@ -39,7 +39,7 @@ class InMemorySpiceSource : SpiceSource {
             .withSuccess(::put)
             .transform { }
 
-    override fun remove(id: SpiceId): UnitOutcome =
+    override fun delete(id: SpiceId): UnitOutcome =
         get(id)
             .transform { spices.remove(id) }
 

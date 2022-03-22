@@ -115,7 +115,7 @@ fun SpiceCard(
                         Icons.Default.Delete,
                         "Delete Spice",
                         Modifier.clickable {
-                            source.remove(id).orAlert { }
+                            source.delete(id).orAlert { }
                             outerRefresh()
                         }.padding(end = 8.dp)
                     )
