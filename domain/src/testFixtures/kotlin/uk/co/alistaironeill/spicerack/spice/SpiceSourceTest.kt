@@ -217,7 +217,8 @@ abstract class SpiceSourceTest {
 
             val id = source.put(SpiceName.random(), otherAliases + alias)
 
-            source.removeAlias(id, alias).expectSuccess()
+            source.removeAlias(id, alias)
+                .expectSuccess()
 
             source.get(id)
                 .expectSuccess()
@@ -246,6 +247,43 @@ abstract class SpiceSourceTest {
     }
 
     @Nested
+    inner class Rename {
+        @Test
+        fun `can rename a spice`() {
+            val id = source.put(SpiceName.random())
+            val newName = SpiceName.random()
+
+            source.rename(id, newName)
+                .expectSuccess()
+
+            source.get(id)
+                .expectSuccess()
+                .get { name }
+                .isEqualTo(newName)
+        }
+
+        @Test
+        fun `returns a NotFound if id does not exist`() {
+            val id = SpiceId.mint()
+            source.rename(id, SpiceName.random())
+                .expectFailure()
+                .isEqualTo(NotFound(id))
+        }
+
+        @Test
+        fun  `returns bad request when name already used`() {
+            val name = SpiceName.random()
+            val extantId = source.put(name)
+
+            val id = source.put(SpiceName.random())
+
+            source.rename(id, name)
+                .expectFailure()
+                .isEqualTo(AlreadyExists(name, extantId))
+        }
+    }
+
+    @Nested
     inner class Delete {
         @Test
         fun `can delete a spice`() {
@@ -268,13 +306,10 @@ abstract class SpiceSourceTest {
         }
     }
 
-    private fun SpiceSource.put(name: SpiceName) : SpiceId = put(name, emptySet())
-
-    private fun SpiceSource.put(name: SpiceName, aliases: Set<SpiceName>) : SpiceId =
+    private fun SpiceSource.put(name: SpiceName, aliases: Set<SpiceName> = emptySet()) : SpiceId =
         create(name)
             .expectSuccess()
             .subject
             .id
             .also { id -> aliases.forEach { addAlias(id, it) } }
 }
-

@@ -7,6 +7,7 @@ import org.http4k.contract.meta
 import org.http4k.core.Method.*
 import org.http4k.lens.Path
 import uk.co.alistaironeill.spicerack.error.perform
+import uk.co.alistaironeill.spicerack.error.toLens
 import uk.co.alistaironeill.spicerack.error.toResponse
 import uk.co.alistaironeill.spicerack.http.str
 
@@ -16,6 +17,7 @@ object SpiceSourceHttpHandler {
 
     private val idPath = Path.str(SpiceId).of("SpiceId")
     private val namePath = Path.str(SpiceName).of("SpiceName")
+    private val updateLens = JSpiceUpdate.toLens()
 
     fun SpiceSource.toContractRoutes(): List<ContractRoute> =
         listOf(
@@ -23,8 +25,7 @@ object SpiceSourceHttpHandler {
             getById(),
             getByName(),
             create(),
-            addAlias(),
-            removeAlias(),
+            update(),
             remove()
         )
 
@@ -66,24 +67,22 @@ object SpiceSourceHttpHandler {
             }
         }
 
-    private fun SpiceSource.addAlias() =
-        SPICE_PATH / idPath / namePath meta {
+    private fun SpiceSource.update() =
+        SPICE_PATH / idPath meta {
 
-        } bindContract PUT to { id, name ->
-            {
-                perform { addAlias(id, name) }
+        } bindContract POST to { id ->
+            { request ->
+                updateLens(request)
+                    .perform { update(id, this) }
                     .toResponse()
             }
         }
 
-    private fun SpiceSource.removeAlias() =
-        SPICE_PATH / idPath / namePath meta {
-
-        } bindContract DELETE to { id, name ->
-            {
-                perform { removeAlias(id, name) }
-                    .toResponse()
-            }
+    private fun SpiceSource.update(id: SpiceId, update: SpiceUpdate) =
+        when (update) {
+            is SpiceUpdate.AddAlias -> addAlias(id, update.alias)
+            is SpiceUpdate.RemoveAlias -> removeAlias(id, update.alias)
+            is SpiceUpdate.Rename -> rename(id, update.name)
         }
 
     private fun SpiceSource.remove() =

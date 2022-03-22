@@ -6,9 +6,11 @@ import org.http4k.core.Method.*
 import org.http4k.core.Request
 import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
+import uk.co.alistaironeill.spicerack.http.bodyAsJson
 import uk.co.alistaironeill.spicerack.http.handle
 import uk.co.alistaironeill.spicerack.spice.SpiceSourceHttpHandler.SPICE_NAME_PATH
 import uk.co.alistaironeill.spicerack.spice.SpiceSourceHttpHandler.SPICE_PATH
+import uk.co.alistaironeill.spicerack.spice.SpiceUpdate.*
 
 class HttpSpiceSource(private val handler: HttpHandler): SpiceSource {
     override fun get(): AonOutcome<Set<Spice>> =
@@ -32,17 +34,22 @@ class HttpSpiceSource(private val handler: HttpHandler): SpiceSource {
             .handle(JSpice)
 
     override fun addAlias(id: SpiceId, name: SpiceName): UnitOutcome =
-        Request(PUT, "$SPICE_PATH/${id.value}/${name.value}")
-            .run(handler)
-            .handle()
+        id.post(AddAlias(name))
 
     override fun removeAlias(id: SpiceId, name: SpiceName): UnitOutcome =
-        Request(DELETE, "$SPICE_PATH/${id.value}/${name.value}")
-            .run(handler)
-            .handle()
+        id.post(RemoveAlias(name))
+
+    override fun rename(id: SpiceId, name: SpiceName): UnitOutcome =
+        id.post(Rename(name))
 
     override fun delete(id: SpiceId): UnitOutcome =
         Request(DELETE, "$SPICE_PATH/${id.value}")
+            .run(handler)
+            .handle()
+
+    private fun SpiceId.post(update: SpiceUpdate) : UnitOutcome =
+        Request(POST, "$SPICE_PATH/$value")
+            .bodyAsJson(update, JSpiceUpdate)
             .run(handler)
             .handle()
 }

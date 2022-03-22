@@ -39,6 +39,13 @@ class InMemorySpiceSource : SpiceSource {
             .withSuccess(::put)
             .transform { }
 
+    override fun rename(id: SpiceId, name: SpiceName): UnitOutcome =
+        failIfExists(name)
+            .bind { get(id) }
+            .transform(withName(name))
+            .withSuccess(::put)
+            .transform { }
+
     override fun delete(id: SpiceId): UnitOutcome =
         get(id)
             .transform { spices.remove(id) }
@@ -53,6 +60,10 @@ class InMemorySpiceSource : SpiceSource {
             ?.let { spice -> AlreadyExists(name, spice.id) }
             ?.asFailure()
             ?: name.asSuccess()
+
+    private fun withName(name: SpiceName): Spice.() -> Spice = {
+        copy(name = name)
+    }
 
     private fun withAlias(name: SpiceName): Spice.() -> Spice = {
         copy(aliases = aliases + name)
