@@ -185,15 +185,19 @@ fun AliasPanel(
     remove: (SpiceName) -> Unit
 ) {
     Column(modifier) {
-        Text("Also Known As:")
-
         Spacer(Modifier.height(16.dp))
 
-        aliases.forEach { alias ->
-            AliasPanel(alias) { remove(alias) }
+        if (aliases.isNotEmpty()) {
+            Text("Also Known As:")
+
+            Spacer(Modifier.height(16.dp))
+
+            aliases.forEach { alias ->
+                AliasPanel(alias) { remove(alias) }
+            }
+
+            Spacer(Modifier.height(16.dp))
         }
-
-        Spacer(Modifier.height(16.dp))
 
         AddTextWidget(
             "Add Alias",
