@@ -1,3 +1,5 @@
+@file:Suppress("FunctionName")
+
 package uk.co.alistaironeill.spicerack.leds
 
 import androidx.compose.material.Text
