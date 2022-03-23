@@ -41,10 +41,11 @@ internal fun SpiceCard(
     source: SpiceSource,
     id: SpiceId
 ) {
+    //TODO: Figure out a nicer way of triggering the Compose refreshes
     val i = remember { mutableStateOf(0) }
     val innerRefresh: () -> Unit = { i.value += 1 }
     val spice = source.get(id).orAlert { null }
-    val j = i.value
+    i.value
 
     Card(
         modifier = Modifier

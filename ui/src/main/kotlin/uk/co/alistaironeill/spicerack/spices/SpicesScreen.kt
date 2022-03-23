@@ -1,3 +1,5 @@
+@file:Suppress("FunctionName")
+
 package uk.co.alistaironeill.spicerack.spices
 
 import androidx.compose.foundation.layout.*
@@ -22,9 +24,10 @@ import uk.co.alistaironeill.spicerack.spice.SpiceSource
 
 @Composable
 fun SpicesScreen(source: SpiceSource) {
+    //TODO: Figure out a nicer way of triggering the Compose refreshes
     val i = remember { mutableStateOf(0) }
     val refresh: () -> Unit = { i.value += 1 }
-    val j = i.value
+    i.value
     val search = remember { mutableStateOf("") }
     Column(Modifier.fillMaxSize()) {
         Row(
