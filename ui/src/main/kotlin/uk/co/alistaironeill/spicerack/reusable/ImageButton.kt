@@ -13,10 +13,15 @@ import androidx.compose.ui.unit.dp
 fun ImageButton(
     text: String,
     icon: ImageVector,
+    enabled: Boolean = true,
     modifier: Modifier = Modifier,
     onClick : () -> Unit
 ) {
-    Button(onClick = onClick, modifier = modifier.padding(8.dp)) {
+    Button(
+        onClick = onClick,
+        modifier = modifier.padding(8.dp),
+        enabled = enabled
+    ) {
         Icon(icon, contentDescription = null, modifier = Modifier.padding(end = 4.dp))
         Text(text = text)
     }
