@@ -15,12 +15,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import org.http4k.client.ApacheClient
+import org.http4k.client.PreCannedApacheHttpClients.defaultApacheHttpClient
+import org.http4k.core.Uri
+import org.http4k.core.then
+import org.http4k.filter.ClientFilters.SetBaseUriFrom
 import uk.co.alistaironeill.spicerack.error.AlertSingleton
 import uk.co.alistaironeill.spicerack.home.HomeScreen
 import uk.co.alistaironeill.spicerack.leds.LedScreen
 import uk.co.alistaironeill.spicerack.navigation.NavBar
 import uk.co.alistaironeill.spicerack.navigation.Screen
-import uk.co.alistaironeill.spicerack.spice.InMemorySpiceSource
+import uk.co.alistaironeill.spicerack.spice.HttpSpiceSource
 import uk.co.alistaironeill.spicerack.spices.SpicesScreen
 
 
@@ -31,7 +36,14 @@ fun main() = application {
         state = rememberWindowState(width = 300.dp, height = 300.dp)
     ) {
         val currentScreen = remember { mutableStateOf(Screen.Home) }
-        val spiceSource = InMemorySpiceSource()
+        val spiceSource = HttpSpiceSource(
+            SetBaseUriFrom(Uri.of("http://localhost:8000"))
+                .then(
+                    ApacheClient(
+                        defaultApacheHttpClient()
+                    )
+                )
+        )
         AlertSingleton.error = remember { mutableStateOf(null) }
         MaterialTheme {
             Column(
