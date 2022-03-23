@@ -33,9 +33,9 @@ fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
         title = "Spice Rack Configuration",
-        state = rememberWindowState(width = 300.dp, height = 300.dp)
+        state = rememberWindowState(width = 960.dp, height = 540.dp)
     ) {
-        val currentScreen = remember { mutableStateOf(Screen.Home) }
+        val currentScreen = remember { mutableStateOf(Screen.Spices) }
         val spiceSource = HttpSpiceSource(
             SetBaseUriFrom(Uri.of("http://localhost:8000"))
                 .then(
