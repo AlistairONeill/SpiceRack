@@ -15,8 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.*
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import java.awt.event.KeyEvent
 
 @Composable
 fun AddTextWidget(
@@ -25,24 +27,42 @@ fun AddTextWidget(
     onSubmit: (String) -> Unit
 ) {
     val text = remember { mutableStateOf("") }
+    val submit: () -> Unit = {
+        if (text.value.isNotBlank()) {
+            onSubmit(text.value)
+            text.value = ""
+        }
+    }
     OutlinedTextField(
         value = text.value,
         trailingIcon = {
             Icon(
                 Icons.Default.Check,
                 contentDescription = "Add",
-                modifier = Modifier.clickable {
-                    onSubmit(text.value)
-                    text.value = ""
-                }.padding(end = 8.dp)
+                modifier = Modifier
+                    .clickable(onClick = submit)
+                    .padding(end = 8.dp)
             )
         },
-        modifier = modifier.padding(8.dp).fillMaxWidth(),
+        modifier = modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+            .onKeyEvent { event ->
+                if (event.isEnterPressed) {
+                    submit()
+                    true
+                } else {
+                    false
+                }
+            },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         label = { Text(text = label) },
         onValueChange = {
             text.value = it
-        }
+        },
+        maxLines = 1
     )
 }
 
+private val androidx.compose.ui.input.key.KeyEvent.isEnterPressed get() =
+    key == Key(KeyEvent.VK_ENTER) && type == KeyEventType.KeyDown
