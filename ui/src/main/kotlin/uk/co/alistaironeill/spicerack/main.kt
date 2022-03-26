@@ -15,17 +15,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import org.http4k.client.ApacheClient
-import org.http4k.client.PreCannedApacheHttpClients.defaultApacheHttpClient
-import org.http4k.core.Uri
-import org.http4k.core.then
-import org.http4k.filter.ClientFilters.SetBaseUriFrom
 import uk.co.alistaironeill.spicerack.error.AlertSingleton
 import uk.co.alistaironeill.spicerack.home.HomeScreen
 import uk.co.alistaironeill.spicerack.leds.LedScreen
 import uk.co.alistaironeill.spicerack.navigation.NavBar
 import uk.co.alistaironeill.spicerack.navigation.Screen
-import uk.co.alistaironeill.spicerack.spice.HttpSpiceSource
+import uk.co.alistaironeill.spicerack.slot.InMemoryLedGroupSource
+import uk.co.alistaironeill.spicerack.spice.InMemorySpiceSource
 import uk.co.alistaironeill.spicerack.spices.SpicesScreen
 
 
@@ -36,14 +32,16 @@ fun main() = application {
         state = rememberWindowState(width = 960.dp, height = 540.dp)
     ) {
         val currentScreen = remember { mutableStateOf(Screen.Spices) }
-        val spiceSource = HttpSpiceSource(
+        val spiceSource = /*HttpSpiceSource(
             SetBaseUriFrom(Uri.of("http://localhost:8000"))
                 .then(
                     ApacheClient(
                         defaultApacheHttpClient()
                     )
                 )
-        )
+        )*/ InMemorySpiceSource()
+        val ledGroupSource = InMemoryLedGroupSource()
+
         AlertSingleton.error = remember { mutableStateOf(null) }
         MaterialTheme {
             Column(
@@ -54,7 +52,7 @@ fun main() = application {
                     when (currentScreen.value) {
                         Screen.Home -> HomeScreen()
                         Screen.Spices -> SpicesScreen(spiceSource)
-                        Screen.LEDs -> LedScreen()
+                        Screen.LEDs -> LedScreen(ledGroupSource)
                     }
                 }
 

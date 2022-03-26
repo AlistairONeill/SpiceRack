@@ -160,7 +160,7 @@ private fun TopBar(
 }
 
 @Composable
-fun LeftPanel(
+private fun LeftPanel(
     modifier: Modifier,
     colour: RGB,
     setColour: (RGB) -> Unit
@@ -178,7 +178,7 @@ fun LeftPanel(
 }
 
 @Composable
-fun AliasPanel(
+private fun AliasPanel(
     modifier: Modifier,
     aliases: Set<SpiceName>,
     add: (SpiceName) -> Unit,
@@ -208,7 +208,7 @@ fun AliasPanel(
 }
 
 @Composable
-fun AliasPanel(
+private fun AliasPanel(
     alias: SpiceName,
     remove: () -> Unit
 ) {
@@ -233,5 +233,4 @@ fun AliasPanel(
 
         Spacer(Modifier.weight(1f))
     }
-
 }
