@@ -84,10 +84,10 @@ fun LedSelector(
         IntSelector(
             Modifier.fillMaxWidth(0.5f)
                 .height(48.dp),
-            led.index.value,
+            led.index.value.toInt() - Byte.MIN_VALUE,
             0 until 240
         ) {
-            set(led.copy(index = Led.Index(it)))
+            set(led.copy(index = Led.Index((it + Byte.MIN_VALUE).toByte())))
         }
     }
 }

@@ -8,6 +8,14 @@ fun Slot.Companion.random() = Slot(
     Slot.Index.random()
 )
 
+fun Slot.Companion.randoms(count: Int) : List<Slot> {
+    val randoms = mutableSetOf<Slot>()
+    while (randoms.size < count) {
+        randoms.add(Slot.random())
+    }
+    return randoms.toList()
+}
+
 fun Slot.Index.Companion.random() = Slot.Index(nextInt())
 
 fun Led.Companion.random() =
