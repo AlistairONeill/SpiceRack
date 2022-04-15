@@ -11,6 +11,14 @@ fun <DOMAIN : TinyType<String>> Path.str(companion: TTCompanion<String, DOMAIN>)
         companion.render
     )
 
+@JvmName("PathIntConstructorByte")
+fun <DOMAIN : TinyType<Byte>> Path.int(companion: TTCompanion<Byte, DOMAIN>) =
+    int().map (
+        { int -> (int + Byte.MIN_VALUE).toByte().let(companion.cons) },
+        { domain -> companion.render(domain).toInt() - Byte.MIN_VALUE }
+    )
+
+@JvmName("PathIntConstructorInt")
 fun <DOMAIN : TinyType<Int>> Path.int(companion: TTCompanion<Int, DOMAIN>) =
     int().map(
             companion.cons,

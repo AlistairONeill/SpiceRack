@@ -1,4 +1,4 @@
-@file:Suppress("FunctionName")
+@file:Suppress("FunctionName", "unused")
 
 package uk.co.alistaironeill.spicerack.slot
 
@@ -62,7 +62,7 @@ abstract class SpiceSlotSourceTest {
         @Test
         fun `putting an id in a slot where the id already has a slot overwrites it`() {
             val id = SpiceId.mint()
-            val (oldSlot, newSlot) = Slot.randoms(2)
+            val (oldSlot, newSlot) = Slot.randoms().take(2)
 
             source.put(oldSlot, id)
                 .expectSuccess()

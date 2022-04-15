@@ -1,8 +1,10 @@
 package uk.co.alistaironeill.spicerack.slot
 
+import com.ubertob.kondor.outcome.asFailure
 import com.ubertob.kondor.outcome.asSuccess
 import uk.co.alistaironeill.spicerack.collections.invert
 import uk.co.alistaironeill.spicerack.error.AonOutcome
+import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
 
 class InMemoryLedGroupSource : LedGroupSource {
@@ -11,7 +13,13 @@ class InMemoryLedGroupSource : LedGroupSource {
     override fun get(slot: Slot): AonOutcome<Set<Led>> =
         data.filterValues { it == slot }
             .keys
-            .asSuccess()
+            .let { leds ->
+                if (leds.isEmpty()) {
+                    NotFound(slot).asFailure()
+                } else {
+                    leds.asSuccess()
+                }
+            }
 
     override fun get(): AonOutcome<Map<Slot, Set<Led>>> =
         data.invert()

@@ -33,5 +33,5 @@ class HttpLedGroupSource(private val handler: HttpHandler): LedGroupSource {
             .run(handler)
             .handle()
 
-    private val Slot.url get() = "$SLOT/${x.value}/${y.value}"
+    private val Slot.url get() = "$SLOT/${x.value.toInt() - Byte.MIN_VALUE}/${y.value.toInt() - Byte.MIN_VALUE}"
 }
