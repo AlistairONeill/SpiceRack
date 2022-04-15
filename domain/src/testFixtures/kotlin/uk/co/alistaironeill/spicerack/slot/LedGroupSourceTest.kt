@@ -154,14 +154,19 @@ abstract class LedGroupSourceTest {
 
         @Test
         fun `correctly returns mapping of all slots to sets of leds`() {
+            val used = mutableListOf<Led>()
+
             val expected = List(5) { Slot.random() }
+                .toSet()
                 .associateWith { slot ->
                     List(10) { Led.random() }
+                        .filter { led -> led !in used }
+                        .toSet()
                         .onEach { led ->
+                            used.add(led)
                             source.add(slot, led)
                                 .expectSuccess()
                         }
-                        .toSet()
                 }
 
             source.get()

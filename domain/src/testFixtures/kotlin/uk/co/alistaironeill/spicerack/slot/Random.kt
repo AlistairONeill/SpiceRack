@@ -1,5 +1,6 @@
 package uk.co.alistaironeill.spicerack.slot
 
+import kotlin.random.Random.Default.nextBytes
 import kotlin.random.Random.Default.nextInt
 
 fun Slot.Companion.random() = Slot(
@@ -15,4 +16,6 @@ fun Led.Companion.random() =
         Led.Index.random()
     )
 
-fun Led.Index.Companion.random() = Led.Index(nextInt())
+private fun Byte.Companion.random() : Byte = nextBytes(1)[0]
+
+fun Led.Index.Companion.random() : Led.Index = Led.Index(Byte.random())

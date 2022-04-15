@@ -20,6 +20,10 @@ abstract class TTCompanionUUID<T: TinyType<String>>(cons: (String) -> T): TTComp
     fun mint() : T = UUID.randomUUID().toString().let(cons)
 }
 
+abstract class TTCompanionByte<T: TinyType<Byte>>(override val cons: (Byte) -> T): TTCompanion<Byte, T> {
+    override val render: (T) -> Byte = TinyType<Byte>::value
+}
+
 abstract class TTCompanionInt<T: TinyType<Int>>(override val cons: (Int) -> T): TTCompanion<Int, T> {
     override val render: (T) -> Int = TinyType<Int>::value
 }

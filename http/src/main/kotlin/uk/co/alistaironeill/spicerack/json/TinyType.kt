@@ -16,17 +16,32 @@ fun <T: TinyType<String>> str(companion: TTCompanion<String, T>): JStringReprese
         override val render: (T) -> String = companion.render
     }
 
-fun <T: TinyType<Int>> num(companion: TTCompanion<Int, T>): JNumRepresentable<T> =
-    object : JNumRepresentable<T>() {
-        override val cons: (BigDecimal) -> T = { it.toInt().let(companion.cons) }
-        override val render: (T) -> BigDecimal = { it.value.toBigDecimal() }
-    }
-
-
 @JvmName("bindTinyTypeString")
 inline fun <PT : Any, reified TT: TinyType<String>> str(noinline binder: PT.() -> TT) =
     JField(binder, str(sniffCompanion()))
 
 @JvmName("bindTinyTypeInt")
 inline fun <PT : Any, reified TT: TinyType<Int>> num(noinline binder: PT.() -> TT) =
-    JField(binder, num(sniffCompanion()))
+    JField(
+        binder,
+        sniffCompanion<Int, TT>()
+            .let { companion ->
+                object : JNumRepresentable<TT>() {
+                    override val cons: (BigDecimal) -> TT = { it.toInt().let(companion.cons) }
+                    override val render: (TT) -> BigDecimal = { it.value.toBigDecimal() }
+                }
+            }
+    )
+
+@JvmName("bindTinyTypeByte")
+inline fun <PT : Any, reified TT: TinyType<Byte>> num(noinline binder: PT.() -> TT) =
+    JField(
+        binder,
+        sniffCompanion<Byte, TT>()
+            .let { companion ->
+                object : JNumRepresentable<TT>() {
+                    override val cons: (BigDecimal) -> TT = { it.toInt().toByte().let(companion.cons) }
+                    override val render: (TT) -> BigDecimal = { it.value.toInt().toBigDecimal() }
+                }
+            }
+    )
