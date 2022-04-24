@@ -62,7 +62,7 @@ private val AonError.status get() = when (this) {
     is UnexpectedError -> Status(code, message)
 }
 
-fun <T: Any> ObjectNodeConverter<T>.toLens() =
+fun <T: Any> JConverter<T>.toLens() =
     BodyLens<HttpOutcome<T>>(
         emptyList(),
         APPLICATION_JSON
