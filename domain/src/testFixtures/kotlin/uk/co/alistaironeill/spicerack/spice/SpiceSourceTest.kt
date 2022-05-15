@@ -65,7 +65,7 @@ abstract class SpiceSourceTest {
 
             source.get(id)
                 .expectFailure()
-                .isEqualTo(NotFound(id))
+                .isEqualTo(id.NotFound())
         }
     }
 
@@ -105,7 +105,7 @@ abstract class SpiceSourceTest {
 
             source.get(name)
                 .expectFailure()
-                .isEqualTo(NotFound(name))
+                .isEqualTo(name.NotFound())
         }
     }
 
@@ -166,7 +166,7 @@ abstract class SpiceSourceTest {
 
             source.addAlias(spiceId, SpiceName.random())
                 .expectFailure()
-                .isEqualTo(NotFound(spiceId))
+                .isEqualTo(spiceId.NotFound())
         }
 
         @Test
@@ -237,7 +237,7 @@ abstract class SpiceSourceTest {
             val alias = SpiceName.random()
             source.removeAlias(id, alias)
                 .expectFailure()
-                .isEqualTo(NotFound(id))
+                .isEqualTo(id.NotFound())
         }
 
         @Test
@@ -272,7 +272,7 @@ abstract class SpiceSourceTest {
             val id = SpiceId.mint()
             source.rename(id, SpiceName.random())
                 .expectFailure()
-                .isEqualTo(NotFound(id))
+                .isEqualTo(id.NotFound())
         }
 
         @Test
@@ -298,7 +298,7 @@ abstract class SpiceSourceTest {
 
             source.get(id)
                 .expectFailure()
-                .isEqualTo(NotFound(id))
+                .isEqualTo(id.NotFound())
         }
 
         @Test
@@ -307,7 +307,7 @@ abstract class SpiceSourceTest {
 
             source.delete(id)
                 .expectFailure()
-                .isEqualTo(NotFound(id))
+                .isEqualTo(id.NotFound())
         }
     }
 
@@ -331,7 +331,7 @@ abstract class SpiceSourceTest {
             val id = SpiceId.mint()
             source.setColour(id, RGB.random())
                 .expectFailure()
-                .isEqualTo(NotFound(id))
+                .isEqualTo(id.NotFound())
         }
     }
 

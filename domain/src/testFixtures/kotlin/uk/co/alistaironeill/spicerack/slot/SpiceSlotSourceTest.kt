@@ -6,11 +6,10 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import strikt.assertions.isEqualTo
 import strikt.assertions.isNull
-import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.outcome.expectFailure
 import uk.co.alistaironeill.spicerack.outcome.expectSuccess
+import uk.co.alistaironeill.spicerack.spice.NotFound
 import uk.co.alistaironeill.spicerack.spice.SpiceId
-import uk.co.alistaironeill.spicerack.spice.invoke
 
 abstract class SpiceSlotSourceTest {
     abstract val source: SpiceSlotSource
@@ -56,7 +55,7 @@ abstract class SpiceSlotSourceTest {
 
             source.get(oldId)
                 .expectFailure()
-                .isEqualTo(NotFound(oldId))
+                .isEqualTo(oldId.NotFound())
         }
 
         @Test
@@ -129,7 +128,7 @@ abstract class SpiceSlotSourceTest {
         fun `returns NotFound error if the id does not have a slot`() {
             source.get(id)
                 .expectFailure()
-                .isEqualTo(NotFound(id))
+                .isEqualTo(id.NotFound())
         }
     }
 }

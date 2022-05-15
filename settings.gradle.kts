@@ -5,6 +5,7 @@ include(":underware")
 include(":domain")
 include(":http")
 include(":ui")
+include(":mongo")
 
 pluginManagement {
     repositories {

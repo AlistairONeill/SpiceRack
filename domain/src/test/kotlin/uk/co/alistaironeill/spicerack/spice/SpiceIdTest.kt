@@ -13,7 +13,7 @@ class SpiceIdTest {
         fun `can create correct NotFound error`() {
             val spiceId = SpiceId.mint()
 
-            expectThat(NotFound(spiceId)) {
+            expectThat(spiceId.NotFound()) {
                 get { type }.isEqualTo("Spice")
                 get { id }.isEqualTo(spiceId.value)
             }

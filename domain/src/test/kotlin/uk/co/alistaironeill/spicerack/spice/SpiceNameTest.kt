@@ -14,7 +14,7 @@ class SpiceNameTest {
         fun `can create correct NotFound error`() {
             val name = SpiceName.random()
 
-            expectThat(NotFound(name)) {
+            expectThat(name.NotFound()) {
                 get { type }.isEqualTo("SpiceName")
                 get { id }.isEqualTo(name.value)
             }

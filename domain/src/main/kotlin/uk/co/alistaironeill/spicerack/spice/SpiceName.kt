@@ -8,4 +8,5 @@ data class SpiceName(override val value: String) : TinyType<String> {
     companion object : TTCompanionString<SpiceName>(::SpiceName)
 }
 
-operator fun NotFound.Companion.invoke(name: SpiceName) = NotFound("SpiceName", name.value)
+@Suppress("FunctionName")
+fun SpiceName.NotFound() = NotFound("SpiceName", value)

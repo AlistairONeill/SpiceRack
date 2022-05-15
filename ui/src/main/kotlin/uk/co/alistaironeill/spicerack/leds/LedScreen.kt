@@ -109,15 +109,18 @@ private fun Visualisation(
         Spacer(Modifier.weight(slotWeight))
         ExtraneousRow(Modifier.weight(extraneousWeight))
         BorderRow(Modifier.weight(borderWeight))
-        (0 until 5).forEach { y ->
-            SlotRow(
-                Modifier.weight(slotWeight),
-                Slot.Index(y),
-                highlighted,
-                set
-            )
-            BorderRow(Modifier.weight(borderWeight))
-        }
+        (0 until 5)
+            .map(Int::toByte)
+            .map(Slot::Index)
+            .forEach { y ->
+                SlotRow(
+                    Modifier.weight(slotWeight),
+                    y,
+                    highlighted,
+                    set
+                )
+                BorderRow(Modifier.weight(borderWeight))
+            }
         ExtraneousRow(Modifier.weight(extraneousWeight))
         Spacer(Modifier.weight(slotWeight))
     }
@@ -175,6 +178,7 @@ private fun SlotRow(
         Spacer(base.weight(extraneousWeight))
         Border(base.weight(borderWeight))
         (0 until 5)
+            .map(Int::toByte)
             .map(Slot::Index)
             .map { x -> Slot(x, y) }
             .forEach { slot ->

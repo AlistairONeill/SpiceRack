@@ -5,6 +5,7 @@ import com.ubertob.kondor.outcome.failIfNull
 import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
+import uk.co.alistaironeill.spicerack.spice.NotFound
 import uk.co.alistaironeill.spicerack.spice.SpiceId
 import uk.co.alistaironeill.spicerack.spice.invoke
 
@@ -20,7 +21,7 @@ class InMemorySpiceSlotSource : SpiceSlotSource {
     override fun get(id: SpiceId): AonOutcome<Slot> =
         mappings
             .singleOrNull(has(id))
-            .failIfNull { NotFound(id) }
+            .failIfNull(id::NotFound)
             .transform(Pair<Slot, SpiceId>::first)
 
     override fun get(slot: Slot): AonOutcome<SpiceId?> =

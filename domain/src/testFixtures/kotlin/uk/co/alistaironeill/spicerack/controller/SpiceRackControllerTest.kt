@@ -14,12 +14,8 @@ import uk.co.alistaironeill.spicerack.io.StubSpiceRackIO
 import uk.co.alistaironeill.spicerack.outcome.expectFailure
 import uk.co.alistaironeill.spicerack.outcome.expectSuccess
 import uk.co.alistaironeill.spicerack.slot.*
-import uk.co.alistaironeill.spicerack.spice.InMemorySpiceSource
-import uk.co.alistaironeill.spicerack.spice.RGB
-import uk.co.alistaironeill.spicerack.spice.SpiceId
-import uk.co.alistaironeill.spicerack.spice.invoke
-import uk.co.alistaironeill.spicerack.spice.SpiceName
 import uk.co.alistaironeill.spicerack.slot.invoke
+import uk.co.alistaironeill.spicerack.spice.*
 
 abstract class SpiceRackControllerTest {
     protected val spiceRackIO = StubSpiceRackIO()
@@ -119,7 +115,7 @@ abstract class SpiceRackControllerTest {
 
             controller.illuminate(setOf(name))
                 .expectFailure()
-                .isEqualTo(NotFound(name))
+                .isEqualTo(name.NotFound())
         }
 
         @Test
@@ -136,7 +132,7 @@ abstract class SpiceRackControllerTest {
 
             controller.illuminate(goodNames + badName)
                 .expectFailure()
-                .isEqualTo(NotFound(badName))
+                .isEqualTo(badName.NotFound())
         }
     }
 
@@ -150,7 +146,7 @@ abstract class SpiceRackControllerTest {
 
             controller.illuminate(setOf(name))
                 .expectFailure()
-                .isEqualTo(NotFound(id))
+                .isEqualTo(id.NotFound())
 
             expectThat(spiceRackIO.colours)
                 .isNull()

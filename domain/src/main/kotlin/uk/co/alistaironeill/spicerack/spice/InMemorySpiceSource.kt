@@ -15,11 +15,11 @@ class InMemorySpiceSource : SpiceSource {
             .asSuccess()
 
     override fun get(id: SpiceId): AonOutcome<Spice> =
-        spices[id].failIfNull { NotFound(id) }
+        spices[id].failIfNull(id::NotFound)
 
     override fun get(name: SpiceName): AonOutcome<Spice> =
         optionalGet(name)
-            .failIfNull { NotFound(name) }
+            .failIfNull(name::NotFound)
 
     override fun create(name: SpiceName): AonOutcome<Spice> =
         failIfExists(name)
