@@ -6,21 +6,22 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import strikt.api.expectThat
 import strikt.assertions.*
-import uk.co.alistaironeill.spicerack.model.random
-import uk.co.alistaironeill.spicerack.model.randoms
 import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.io.StubSpiceRackIO
 import uk.co.alistaironeill.spicerack.model.NotFound
 import uk.co.alistaironeill.spicerack.model.Spice
+import uk.co.alistaironeill.spicerack.model.random
+import uk.co.alistaironeill.spicerack.model.randoms
 import uk.co.alistaironeill.spicerack.outcome.expectFailure
 import uk.co.alistaironeill.spicerack.outcome.expectSuccess
+import uk.co.alistaironeill.spicerack.repository.InMemorySpiceRepository
 import uk.co.alistaironeill.spicerack.slot.*
-import uk.co.alistaironeill.spicerack.slot.invoke
-import uk.co.alistaironeill.spicerack.spice.*
+import uk.co.alistaironeill.spicerack.source.RealSpiceSource
+import uk.co.alistaironeill.spicerack.spice.RGB
 
 abstract class SpiceRackControllerTest {
     protected val spiceRackIO = StubSpiceRackIO()
-    protected val spiceSource = InMemorySpiceSource()
+    protected val spiceSource = RealSpiceSource(InMemorySpiceRepository())
     protected val ledGroupSource = InMemoryLedGroupSource()
     protected val slotSource = InMemorySpiceSlotSource()
 

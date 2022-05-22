@@ -9,11 +9,13 @@ import org.http4k.core.then
 import org.http4k.routing.routes
 import org.http4k.server.Undertow
 import org.http4k.server.asServer
-import uk.co.alistaironeill.spicerack.spice.InMemorySpiceSource
+import uk.co.alistaironeill.spicerack.repository.InMemorySpiceRepository
+import uk.co.alistaironeill.spicerack.source.RealSpiceSource
 import uk.co.alistaironeill.spicerack.spice.SpiceSourceHttpHandler.toContractRoutes
 
 fun main() {
-    InMemorySpiceSource()
+    InMemorySpiceRepository()
+        .let(::RealSpiceSource)
         .toContractRoutes()
         .asHttpHandler()
         .let { loggingFilter.then(it) }

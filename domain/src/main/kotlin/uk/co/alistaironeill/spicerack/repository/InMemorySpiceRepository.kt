@@ -27,11 +27,15 @@ class InMemorySpiceRepository : SpiceRepository {
 
     override fun get(name: Spice.Name): AonOutcome<Set<Spice>> =
         data.values
-            .filter { it.name == name || it.aliases.contains(name) }
+            .filter(canBeCalled(name))
             .toSet()
             .asSuccess()
 
     override fun delete(id: Spice.Id): UnitOutcome =
         data.remove(id)?.asSuccess()?.transform { }
             ?: id.NotFound().asFailure()
+
+    private fun canBeCalled(name: Spice.Name): (Spice) -> Boolean = { spice ->
+        spice.name == name || spice.aliases.contains(name)
+    }
 }

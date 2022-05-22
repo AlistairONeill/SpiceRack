@@ -17,9 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import uk.co.alistaironeill.spicerack.error.orAlert
-import uk.co.alistaironeill.spicerack.reusable.AddTextWidget
 import uk.co.alistaironeill.spicerack.model.Spice
-import uk.co.alistaironeill.spicerack.spice.SpiceSource
+import uk.co.alistaironeill.spicerack.reusable.AddTextWidget
+import uk.co.alistaironeill.spicerack.source.SpiceSource
 
 @Composable
 fun SpicesScreen(source: SpiceSource) {

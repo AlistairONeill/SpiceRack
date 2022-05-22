@@ -1,8 +1,9 @@
-package uk.co.alistaironeill.spicerack.spice
+package uk.co.alistaironeill.spicerack.source
 
 import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
 import uk.co.alistaironeill.spicerack.model.Spice
+import uk.co.alistaironeill.spicerack.spice.RGB
 
 interface SpiceSource {
     fun get(): AonOutcome<Set<Spice>>

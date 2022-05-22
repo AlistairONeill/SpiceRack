@@ -14,6 +14,7 @@ import uk.co.alistaironeill.spicerack.model.JSpice
 import uk.co.alistaironeill.spicerack.model.JSpiceUpdate
 import uk.co.alistaironeill.spicerack.model.Spice
 import uk.co.alistaironeill.spicerack.model.SpiceUpdate
+import uk.co.alistaironeill.spicerack.source.SpiceSource
 
 object SpiceSourceHttpHandler {
     const val SPICE_PATH = "/api/spice"

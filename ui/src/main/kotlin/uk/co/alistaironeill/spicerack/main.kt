@@ -20,8 +20,9 @@ import uk.co.alistaironeill.spicerack.home.HomeScreen
 import uk.co.alistaironeill.spicerack.leds.LedScreen
 import uk.co.alistaironeill.spicerack.navigation.NavBar
 import uk.co.alistaironeill.spicerack.navigation.Screen
+import uk.co.alistaironeill.spicerack.repository.InMemorySpiceRepository
 import uk.co.alistaironeill.spicerack.slot.InMemoryLedGroupSource
-import uk.co.alistaironeill.spicerack.spice.InMemorySpiceSource
+import uk.co.alistaironeill.spicerack.source.RealSpiceSource
 import uk.co.alistaironeill.spicerack.spices.SpicesScreen
 
 
@@ -39,7 +40,7 @@ fun main() = application {
                         defaultApacheHttpClient()
                     )
                 )
-        )*/ InMemorySpiceSource()
+        )*/ InMemorySpiceRepository().let(::RealSpiceSource)
         val ledGroupSource = InMemoryLedGroupSource()
 
         AlertSingleton.error = remember { mutableStateOf(null) }

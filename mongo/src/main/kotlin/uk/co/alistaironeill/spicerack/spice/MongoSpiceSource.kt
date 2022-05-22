@@ -10,6 +10,7 @@ import uk.co.alistaironeill.spicerack.error.UnitOutcome
 import uk.co.alistaironeill.spicerack.model.AlreadyExists
 import uk.co.alistaironeill.spicerack.model.NotFound
 import uk.co.alistaironeill.spicerack.model.Spice
+import uk.co.alistaironeill.spicerack.source.SpiceSource
 
 class MongoSpiceSource(collection: MongoCollection<Spice>) : SpiceSource, MongoSource<Spice>(collection) {
     override fun get(): AonOutcome<Set<Spice>> =

@@ -28,11 +28,11 @@ import androidx.compose.ui.text.style.TextAlign.Companion.Right
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import uk.co.alistaironeill.spicerack.error.orAlert
+import uk.co.alistaironeill.spicerack.model.Spice
 import uk.co.alistaironeill.spicerack.reusable.AddTextWidget
 import uk.co.alistaironeill.spicerack.reusable.RGBWidget
+import uk.co.alistaironeill.spicerack.source.SpiceSource
 import uk.co.alistaironeill.spicerack.spice.RGB
-import uk.co.alistaironeill.spicerack.model.Spice
-import uk.co.alistaironeill.spicerack.spice.SpiceSource
 
 @Composable
 internal fun SpiceCard(
