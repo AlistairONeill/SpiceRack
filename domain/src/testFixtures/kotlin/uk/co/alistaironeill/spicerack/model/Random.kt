@@ -14,6 +14,7 @@ fun Spice.Companion.random() = Spice(
     List(3) { Spice.Name.random() }.toSet(),
     RGB.random()
 )
+fun Spice.Companion.randoms() = distinctRandoms(Spice.Companion::random)
 
 fun RGB.Companion.random() = Random.nextBytes(3).let { (r, g, b) -> RGB(r, g, b) }
 fun RGB.Companion.randoms() = distinctRandoms(RGB.Companion::random)
