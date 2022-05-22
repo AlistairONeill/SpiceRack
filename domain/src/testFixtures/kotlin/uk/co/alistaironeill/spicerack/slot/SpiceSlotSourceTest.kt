@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import strikt.assertions.isEqualTo
 import strikt.assertions.isNull
+import uk.co.alistaironeill.spicerack.model.NotFound
+import uk.co.alistaironeill.spicerack.model.Spice
 import uk.co.alistaironeill.spicerack.outcome.expectFailure
 import uk.co.alistaironeill.spicerack.outcome.expectSuccess
-import uk.co.alistaironeill.spicerack.spice.NotFound
-import uk.co.alistaironeill.spicerack.spice.SpiceId
 
 abstract class SpiceSlotSourceTest {
     abstract val source: SpiceSlotSource
@@ -18,7 +18,7 @@ abstract class SpiceSlotSourceTest {
     inner class Put {
         @Test
         fun `can put an id in a slot`() {
-            val id = SpiceId.mint()
+            val id = Spice.Id.mint()
             val slot = Slot.random()
 
             source.put(slot, id)
@@ -35,8 +35,8 @@ abstract class SpiceSlotSourceTest {
 
         @Test
         fun `putting an id in a slot which already has an id overwrites it`() {
-            val oldId = SpiceId.mint()
-            val newId = SpiceId.mint()
+            val oldId = Spice.Id.mint()
+            val newId = Spice.Id.mint()
             val slot = Slot.random()
 
             source.put(slot, oldId)
@@ -60,7 +60,7 @@ abstract class SpiceSlotSourceTest {
 
         @Test
         fun `putting an id in a slot where the id already has a slot overwrites it`() {
-            val id = SpiceId.mint()
+            val id = Spice.Id.mint()
             val (oldSlot, newSlot) = Slot.randoms().take(2)
 
             source.put(oldSlot, id)
@@ -90,7 +90,7 @@ abstract class SpiceSlotSourceTest {
 
         @Test
         fun `returns the id if it is present`() {
-            val id = SpiceId.mint()
+            val id = Spice.Id.mint()
 
             source.put(slot, id)
                 .expectSuccess()
@@ -110,7 +110,7 @@ abstract class SpiceSlotSourceTest {
 
     @Nested
     inner class GetById {
-        private val id = SpiceId.mint()
+        private val id = Spice.Id.mint()
 
         @Test
         fun `returns the slot if it is present`() {

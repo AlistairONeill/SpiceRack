@@ -4,12 +4,13 @@ import org.junit.jupiter.api.Test
 import uk.co.alistaironeill.spicerack.domain.colour.random
 import uk.co.alistaironeill.spicerack.domain.spice.random
 import uk.co.alistaironeill.spicerack.json.expectRoundTrips
+import uk.co.alistaironeill.spicerack.model.Spice
 import uk.co.alistaironeill.spicerack.spice.SpiceUpdate.*
 
 class JSpiceUpdateTest {
     @Test
     fun `can round trip a rename`() =
-        SpiceName.random()
+        Spice.Name.random()
             .let(::Rename)
             .run {
                 expectRoundTrips(JSpiceUpdate.JRename)
@@ -18,7 +19,7 @@ class JSpiceUpdateTest {
 
     @Test
     fun `can round trip an add alias`() =
-        SpiceName.random()
+        Spice.Name.random()
             .let(::AddAlias)
             .run {
                 expectRoundTrips(JSpiceUpdate.JAddAlias)
@@ -27,7 +28,7 @@ class JSpiceUpdateTest {
 
     @Test
     fun `can round trip a remove alias`() =
-        SpiceName.random()
+        Spice.Name.random()
             .let(::RemoveAlias)
             .run {
                 expectRoundTrips(JSpiceUpdate.JRemoveAlias)

@@ -31,15 +31,14 @@ import uk.co.alistaironeill.spicerack.error.orAlert
 import uk.co.alistaironeill.spicerack.reusable.AddTextWidget
 import uk.co.alistaironeill.spicerack.reusable.RGBWidget
 import uk.co.alistaironeill.spicerack.spice.RGB
-import uk.co.alistaironeill.spicerack.spice.SpiceId
-import uk.co.alistaironeill.spicerack.spice.SpiceName
+import uk.co.alistaironeill.spicerack.model.Spice
 import uk.co.alistaironeill.spicerack.spice.SpiceSource
 
 @Composable
 internal fun SpiceCard(
     outerRefresh: () -> Unit,
     source: SpiceSource,
-    id: SpiceId
+    id: Spice.Id
 ) {
     //TODO: Figure out a nicer way of triggering the Compose refreshes
     val i = remember { mutableStateOf(0) }
@@ -105,7 +104,7 @@ internal fun SpiceCard(
 
 @Composable
 private fun TopBar(
-    name: SpiceName,
+    name: Spice.Name,
     delete: () -> Unit
 ) {
     val deleteClicked = remember { mutableStateOf(false) }
@@ -180,9 +179,9 @@ private fun LeftPanel(
 @Composable
 private fun AliasPanel(
     modifier: Modifier,
-    aliases: Set<SpiceName>,
-    add: (SpiceName) -> Unit,
-    remove: (SpiceName) -> Unit
+    aliases: Set<Spice.Name>,
+    add: (Spice.Name) -> Unit,
+    remove: (Spice.Name) -> Unit
 ) {
     Column(modifier) {
         Spacer(Modifier.height(16.dp))
@@ -202,14 +201,14 @@ private fun AliasPanel(
         AddTextWidget(
             "Add Alias",
         ) { alias ->
-            add(SpiceName(alias))
+            add(Spice.Name(alias))
         }
     }
 }
 
 @Composable
 private fun AliasPanel(
-    alias: SpiceName,
+    alias: Spice.Name,
     remove: () -> Unit
 ) {
     Row(

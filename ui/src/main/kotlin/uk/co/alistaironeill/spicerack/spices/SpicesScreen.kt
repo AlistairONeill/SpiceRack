@@ -18,8 +18,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import uk.co.alistaironeill.spicerack.error.orAlert
 import uk.co.alistaironeill.spicerack.reusable.AddTextWidget
-import uk.co.alistaironeill.spicerack.spice.Spice
-import uk.co.alistaironeill.spicerack.spice.SpiceName
+import uk.co.alistaironeill.spicerack.model.Spice
 import uk.co.alistaironeill.spicerack.spice.SpiceSource
 
 @Composable
@@ -36,7 +35,7 @@ fun SpicesScreen(source: SpiceSource) {
         ) {
             Box(Modifier.weight(0.5f)) {
                 AddTextWidget("Add Spice") { spiceName ->
-                    source.create(SpiceName(spiceName)).orAlert { }
+                    source.create(Spice.Name(spiceName)).orAlert { }
                     refresh()
                 }
             }
@@ -81,6 +80,6 @@ fun SpicesScreen(source: SpiceSource) {
 
 private fun matches(search: String): (Spice) -> Boolean = { spice ->
     spice.name.value.contains(search, true) ||
-            spice.aliases.map(SpiceName::value).any { it.contains(search, true) }
+            spice.aliases.map(Spice.Name::value).any { it.contains(search, true) }
 }
 

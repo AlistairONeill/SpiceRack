@@ -8,12 +8,12 @@ import uk.co.alistaironeill.spicerack.error.perform
 import uk.co.alistaironeill.spicerack.error.toLens
 import uk.co.alistaironeill.spicerack.error.toResponse
 import uk.co.alistaironeill.spicerack.json.str
-import uk.co.alistaironeill.spicerack.spice.SpiceName
+import uk.co.alistaironeill.spicerack.model.Spice
 
 object SpiceRackControllerHttpHandler {
     const val API_ILLUMINATE = "/api/illuminate"
 
-    private val illuminateLens = JSet(str(SpiceName)).toLens()
+    private val illuminateLens = JSet(str(Spice.Name)).toLens()
 
     fun SpiceRackController.toContractRoutes(): List<ContractRoute> =
         listOf(

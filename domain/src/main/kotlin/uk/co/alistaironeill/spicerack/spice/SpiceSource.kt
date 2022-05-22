@@ -2,15 +2,16 @@ package uk.co.alistaironeill.spicerack.spice
 
 import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
+import uk.co.alistaironeill.spicerack.model.Spice
 
 interface SpiceSource {
     fun get(): AonOutcome<Set<Spice>>
-    fun get(id: SpiceId): AonOutcome<Spice>
-    fun get(name: SpiceName): AonOutcome<Spice>
-    fun create(name: SpiceName): AonOutcome<Spice>
-    fun addAlias(id: SpiceId, name: SpiceName): UnitOutcome
-    fun removeAlias(id: SpiceId, name: SpiceName): UnitOutcome
-    fun rename(id: SpiceId, name: SpiceName): UnitOutcome
-    fun setColour(id: SpiceId, colour: RGB): UnitOutcome
-    fun delete(id: SpiceId): UnitOutcome
+    fun get(id: Spice.Id): AonOutcome<Spice>
+    fun get(name: Spice.Name): AonOutcome<Spice>
+    fun create(name: Spice.Name): AonOutcome<Spice>
+    fun addAlias(id: Spice.Id, name: Spice.Name): UnitOutcome
+    fun removeAlias(id: Spice.Id, name: Spice.Name): UnitOutcome
+    fun rename(id: Spice.Id, name: Spice.Name): UnitOutcome
+    fun setColour(id: Spice.Id, colour: RGB): UnitOutcome
+    fun delete(id: Spice.Id): UnitOutcome
 }

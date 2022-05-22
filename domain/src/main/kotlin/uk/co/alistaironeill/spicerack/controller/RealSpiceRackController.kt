@@ -1,14 +1,12 @@
 package uk.co.alistaironeill.spicerack.controller
 
 import com.ubertob.kondor.outcome.*
-import uk.co.alistaironeill.spicerack.error.AonError
 import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
 import uk.co.alistaironeill.spicerack.io.SpiceRackIO
+import uk.co.alistaironeill.spicerack.model.Spice
 import uk.co.alistaironeill.spicerack.slot.*
 import uk.co.alistaironeill.spicerack.spice.RGB
-import uk.co.alistaironeill.spicerack.spice.Spice
-import uk.co.alistaironeill.spicerack.spice.SpiceName
 import uk.co.alistaironeill.spicerack.spice.SpiceSource
 
 class RealSpiceRackController(
@@ -17,7 +15,7 @@ class RealSpiceRackController(
     private val ledGroupSource: LedGroupSource,
     private val spiceSlotSource: SpiceSlotSource
 ) : SpiceRackController {
-    override fun illuminate(names: Set<SpiceName>): UnitOutcome =
+    override fun illuminate(names: Set<Spice.Name>): UnitOutcome =
         names.map(spiceSource::get)
             .extractList()
             .flatMap(::withLeds)

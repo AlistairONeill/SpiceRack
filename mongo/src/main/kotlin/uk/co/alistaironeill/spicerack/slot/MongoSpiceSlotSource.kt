@@ -6,11 +6,11 @@ import org.litote.kmongo.eq
 import uk.co.alistaironeill.spicerack.MongoSource
 import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
-import uk.co.alistaironeill.spicerack.spice.SpiceId
-import uk.co.alistaironeill.spicerack.spice.NotFound
+import uk.co.alistaironeill.spicerack.model.NotFound
+import uk.co.alistaironeill.spicerack.model.Spice
 
 class MongoSpiceSlotSource(collection: MongoCollection<MongoSpiceSlotMembership>): SpiceSlotSource, MongoSource<MongoSpiceSlotMembership>(collection) {
-    override fun put(slot: Slot, id: SpiceId): UnitOutcome =
+    override fun put(slot: Slot, id: Spice.Id): UnitOutcome =
         tryOrFail {
             deleteMany(MongoSpiceSlotMembership::id eq id)
             deleteMany(MongoSpiceSlotMembership::slot eq slot)
@@ -23,14 +23,14 @@ class MongoSpiceSlotSource(collection: MongoCollection<MongoSpiceSlotMembership>
             )
         }
 
-    override fun get(id: SpiceId): AonOutcome<Slot> =
+    override fun get(id: Spice.Id): AonOutcome<Slot> =
         tryOrFail {
             find(MongoSpiceSlotMembership::id eq id)
                 .singleOrNull()
                 ?.slot
         }.failIfNull(id::NotFound)
 
-    override fun get(slot: Slot): AonOutcome<SpiceId?> =
+    override fun get(slot: Slot): AonOutcome<Spice.Id?> =
         tryOrFail {
             find(MongoSpiceSlotMembership::slot eq slot)
                 .singleOrNull()
@@ -40,5 +40,5 @@ class MongoSpiceSlotSource(collection: MongoCollection<MongoSpiceSlotMembership>
 
 data class MongoSpiceSlotMembership(
     val slot: Slot,
-    val id: SpiceId
+    val id: Spice.Id
 )

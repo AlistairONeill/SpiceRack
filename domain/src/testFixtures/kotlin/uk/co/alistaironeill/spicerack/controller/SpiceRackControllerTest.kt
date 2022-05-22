@@ -11,6 +11,8 @@ import uk.co.alistaironeill.spicerack.domain.colour.randoms
 import uk.co.alistaironeill.spicerack.domain.spice.randoms
 import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.io.StubSpiceRackIO
+import uk.co.alistaironeill.spicerack.model.NotFound
+import uk.co.alistaironeill.spicerack.model.Spice
 import uk.co.alistaironeill.spicerack.outcome.expectFailure
 import uk.co.alistaironeill.spicerack.outcome.expectSuccess
 import uk.co.alistaironeill.spicerack.slot.*
@@ -26,7 +28,7 @@ abstract class SpiceRackControllerTest {
     abstract protected val controller : SpiceRackController
 
     private val rgbs = RGB.randoms()
-    private val names = SpiceName.randoms()
+    private val names = Spice.Name.randoms()
     private val slots = Slot.randoms()
     private val leds = Led.randoms()
 
@@ -171,7 +173,7 @@ abstract class SpiceRackControllerTest {
         }
     }
 
-    private fun createSpice(name: SpiceName, rgb: RGB) : SpiceId =
+    private fun createSpice(name: Spice.Name, rgb: RGB) : Spice.Id =
         spiceSource.create(name)
             .expectSuccess()
             .subject
@@ -181,7 +183,7 @@ abstract class SpiceRackControllerTest {
             }
             .id
 
-    private fun createSlotFor(id: SpiceId): Slot =
+    private fun createSlotFor(id: Spice.Id): Slot =
         slots.first()
             .also { slot ->
                 slotSource.put(slot, id)

@@ -5,31 +5,30 @@ import com.ubertob.kondor.outcome.failIfNull
 import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
-import uk.co.alistaironeill.spicerack.spice.NotFound
-import uk.co.alistaironeill.spicerack.spice.SpiceId
-import uk.co.alistaironeill.spicerack.spice.invoke
+import uk.co.alistaironeill.spicerack.model.NotFound
+import uk.co.alistaironeill.spicerack.model.Spice
 
 class InMemorySpiceSlotSource : SpiceSlotSource {
-    private val mappings : MutableSet<Pair<Slot, SpiceId>> = mutableSetOf()
+    private val mappings : MutableSet<Pair<Slot, Spice.Id>> = mutableSetOf()
 
-    override fun put(slot: Slot, id: SpiceId): UnitOutcome = Unit.asSuccess().also {
+    override fun put(slot: Slot, id: Spice.Id): UnitOutcome = Unit.asSuccess().also {
         mappings.removeIf(has(slot))
         mappings.removeIf(has(id))
         mappings.add(slot to id)
     }
 
-    override fun get(id: SpiceId): AonOutcome<Slot> =
+    override fun get(id: Spice.Id): AonOutcome<Slot> =
         mappings
             .singleOrNull(has(id))
             .failIfNull(id::NotFound)
-            .transform(Pair<Slot, SpiceId>::first)
+            .transform(Pair<Slot, Spice.Id>::first)
 
-    override fun get(slot: Slot): AonOutcome<SpiceId?> =
+    override fun get(slot: Slot): AonOutcome<Spice.Id?> =
         mappings
             .singleOrNull(has(slot))
             ?.second
             .asSuccess()
 
-    private fun has(slot: Slot) : (Pair<Slot, SpiceId>) -> Boolean = { (compare, _) -> compare == slot }
-    private fun has(id: SpiceId) : (Pair<Slot, SpiceId>) -> Boolean = { (_, compare) -> compare == id }
+    private fun has(slot: Slot) : (Pair<Slot, Spice.Id>) -> Boolean = { (compare, _) -> compare == slot }
+    private fun has(id: Spice.Id) : (Pair<Slot, Spice.Id>) -> Boolean = { (_, compare) -> compare == id }
 }

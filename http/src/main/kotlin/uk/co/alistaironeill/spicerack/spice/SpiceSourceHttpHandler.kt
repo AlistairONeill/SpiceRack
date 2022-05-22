@@ -10,13 +10,14 @@ import uk.co.alistaironeill.spicerack.error.perform
 import uk.co.alistaironeill.spicerack.error.toLens
 import uk.co.alistaironeill.spicerack.error.toResponse
 import uk.co.alistaironeill.spicerack.http.str
+import uk.co.alistaironeill.spicerack.model.Spice
 
 object SpiceSourceHttpHandler {
     const val SPICE_PATH = "/api/spice"
     const val SPICE_NAME_PATH = "/api/spiceName"
 
-    private val idPath = Path.str(SpiceId).of("SpiceId")
-    private val namePath = Path.str(SpiceName).of("SpiceName")
+    private val idPath = Path.str(Spice.Id).of("SpiceId")
+    private val namePath = Path.str(Spice.Name).of("SpiceName")
     private val updateLens = JSpiceUpdate.toLens()
 
     fun SpiceSource.toContractRoutes(): List<ContractRoute> =
@@ -78,7 +79,7 @@ object SpiceSourceHttpHandler {
             }
         }
 
-    private fun SpiceSource.update(id: SpiceId, update: SpiceUpdate) =
+    private fun SpiceSource.update(id: Spice.Id, update: SpiceUpdate) =
         when (update) {
             is SpiceUpdate.AddAlias -> addAlias(id, update.alias)
             is SpiceUpdate.RemoveAlias -> removeAlias(id, update.alias)

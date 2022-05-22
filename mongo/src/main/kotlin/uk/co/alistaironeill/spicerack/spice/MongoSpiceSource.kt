@@ -9,6 +9,9 @@ import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.BadRequest
 import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
+import uk.co.alistaironeill.spicerack.model.AlreadyExists
+import uk.co.alistaironeill.spicerack.model.NotFound
+import uk.co.alistaironeill.spicerack.model.Spice
 
 class MongoSpiceSource(collection: MongoCollection<Spice>) : SpiceSource, MongoSource<Spice>(collection) {
     override fun get(): AonOutcome<Set<Spice>> =
@@ -17,14 +20,14 @@ class MongoSpiceSource(collection: MongoCollection<Spice>) : SpiceSource, MongoS
                 .toSet()
         }
 
-    override fun get(id: SpiceId): AonOutcome<Spice> =
+    override fun get(id: Spice.Id): AonOutcome<Spice> =
         tryOrFail {
             find(
                 Spice::id eq id
             ).singleOrNull()
         }.failIfNull(id::NotFound)
 
-    override fun get(name: SpiceName): AonOutcome<Spice> =
+    override fun get(name: Spice.Name): AonOutcome<Spice> =
         tryOrFail {
             find(
                 or(
@@ -34,12 +37,12 @@ class MongoSpiceSource(collection: MongoCollection<Spice>) : SpiceSource, MongoS
             ).singleOrNull()
         }.failIfNull(name::NotFound)
 
-    override fun create(name: SpiceName): AonOutcome<Spice> =
+    override fun create(name: Spice.Name): AonOutcome<Spice> =
         failIfExists(name)
             .bind {
                 tryOrFail {
                     Spice(
-                        SpiceId.mint(),
+                        Spice.Id.mint(),
                         name,
                         emptySet(),
                         RGB.Default
@@ -47,7 +50,7 @@ class MongoSpiceSource(collection: MongoCollection<Spice>) : SpiceSource, MongoS
                 }
             }
 
-    override fun addAlias(id: SpiceId, name: SpiceName): UnitOutcome =
+    override fun addAlias(id: Spice.Id, name: Spice.Name): UnitOutcome =
         failIfExists(name)
             .bind {
                 update(
@@ -56,14 +59,14 @@ class MongoSpiceSource(collection: MongoCollection<Spice>) : SpiceSource, MongoS
                 )
             }.transform { }
 
-    override fun removeAlias(id: SpiceId, name: SpiceName): UnitOutcome =
+    override fun removeAlias(id: Spice.Id, name: Spice.Name): UnitOutcome =
         get(id)
             .transform(Spice::aliases)
             .bind { aliases ->
                 if (aliases.contains(name)) {
                     aliases.minus(name).asSuccess()
                 } else {
-                    NotFound(name, id).asFailure()
+                    name.NotFound(id).asFailure()
                 }
             }.bind { aliases ->
                 update(
@@ -72,7 +75,7 @@ class MongoSpiceSource(collection: MongoCollection<Spice>) : SpiceSource, MongoS
                 )
             }.transform { }
 
-    override fun rename(id: SpiceId, name: SpiceName): UnitOutcome =
+    override fun rename(id: Spice.Id, name: Spice.Name): UnitOutcome =
         failIfExists(name)
             .bind {
                 update(
@@ -81,13 +84,13 @@ class MongoSpiceSource(collection: MongoCollection<Spice>) : SpiceSource, MongoS
                 )
             }.transform { }
 
-    override fun setColour(id: SpiceId, colour: RGB): UnitOutcome =
+    override fun setColour(id: Spice.Id, colour: RGB): UnitOutcome =
         update(
             id,
             Spice::colour setTo colour
         )
 
-    override fun delete(id: SpiceId): UnitOutcome =
+    override fun delete(id: Spice.Id): UnitOutcome =
         tryOrFail {
             deleteMany(
                 Spice::id eq id
@@ -95,7 +98,7 @@ class MongoSpiceSource(collection: MongoCollection<Spice>) : SpiceSource, MongoS
         }.failIf({it.deletedCount == 0L}) { id.NotFound() }
             .transform { }
 
-    private fun optionalGet(name: SpiceName): AonOutcome<SpiceId?> =
+    private fun optionalGet(name: Spice.Name): AonOutcome<Spice.Id?> =
         tryOrFail {
             find(
                 or(
@@ -106,14 +109,14 @@ class MongoSpiceSource(collection: MongoCollection<Spice>) : SpiceSource, MongoS
                 ?.id
         }
 
-    private fun failIfExists(name: SpiceName): UnitOutcome =
+    private fun failIfExists(name: Spice.Name): UnitOutcome =
         optionalGet(name)
             .bind { extantId ->
-                extantId?.let { BadRequest.AlreadyExists(name, it) }?.asFailure()
+                extantId?.let { name.AlreadyExists(it) }?.asFailure()
                     ?: Unit.asSuccess()
             }
 
-    private fun update(id: SpiceId, bson: Bson): UnitOutcome =
+    private fun update(id: Spice.Id, bson: Bson): UnitOutcome =
         tryOrFail {
             updateOne(
                 Spice::id eq id,
@@ -122,7 +125,7 @@ class MongoSpiceSource(collection: MongoCollection<Spice>) : SpiceSource, MongoS
         }.failIf({ it.matchedCount == 0L }) { id.NotFound() }
             .transform { }
 
-    private fun update(id: SpiceId, setTo: SetTo<*>): UnitOutcome =
+    private fun update(id: Spice.Id, setTo: SetTo<*>): UnitOutcome =
         tryOrFail {
             updateOne(
                 Spice::id eq id,

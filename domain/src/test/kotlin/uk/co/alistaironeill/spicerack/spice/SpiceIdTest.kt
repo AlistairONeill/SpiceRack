@@ -5,13 +5,15 @@ import org.junit.jupiter.api.Test
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import uk.co.alistaironeill.spicerack.error.NotFound
+import uk.co.alistaironeill.spicerack.model.NotFound
+import uk.co.alistaironeill.spicerack.model.Spice
 
 class SpiceIdTest {
     @Nested
     inner class Error {
         @Test
         fun `can create correct NotFound error`() {
-            val spiceId = SpiceId.mint()
+            val spiceId = Spice.Id.mint()
 
             expectThat(spiceId.NotFound()) {
                 get { type }.isEqualTo("Spice")
