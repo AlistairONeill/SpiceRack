@@ -14,6 +14,7 @@ import uk.co.alistaironeill.spicerack.http.int
 import uk.co.alistaironeill.spicerack.model.JLed
 import uk.co.alistaironeill.spicerack.model.JSlotString
 import uk.co.alistaironeill.spicerack.model.Slot
+import uk.co.alistaironeill.spicerack.source.LedGroupSource
 
 object LedGroupSourceHttpHandler {
     const val SLOT = "/api/slot"
@@ -29,7 +30,7 @@ object LedGroupSourceHttpHandler {
             getBySlot(),
             getAll(),
             add(),
-            clear()
+            remove()
         )
 
     private fun LedGroupSource.getBySlot() =
@@ -62,12 +63,13 @@ object LedGroupSourceHttpHandler {
             }
         }
 
-    private fun LedGroupSource.clear() =
+    private fun LedGroupSource.remove() =
         slotPath meta {
 
         } bindContract DELETE to { x, y ->
-            {
-                perform { clear(Slot(x,y)) }
+            { request ->
+                ledLens(request)
+                    .perform { remove(Slot(x, y), this) }
                     .toResponse()
             }
         }

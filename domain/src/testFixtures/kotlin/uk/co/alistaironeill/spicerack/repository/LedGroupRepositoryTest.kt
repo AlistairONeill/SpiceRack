@@ -5,10 +5,8 @@ import org.junit.jupiter.api.Test
 import strikt.assertions.isEmpty
 import strikt.assertions.isEqualTo
 import uk.co.alistaironeill.spicerack.model.Led
-import uk.co.alistaironeill.spicerack.model.NotFound
 import uk.co.alistaironeill.spicerack.model.Slot
 import uk.co.alistaironeill.spicerack.model.randoms
-import uk.co.alistaironeill.spicerack.outcome.expectFailure
 import uk.co.alistaironeill.spicerack.outcome.expectSuccess
 
 @Suppress("FunctionName")
@@ -54,12 +52,12 @@ abstract class LedGroupRepositoryTest {
     @Nested
     inner class GetBySlot {
         @Test
-        fun `returns NotFound if nothing stored for slot`() {
+        fun `returns empty set if nothing stored for slot`() {
             val slot = randomSlots.first()
 
             repository.get(slot)
-                .expectFailure()
-                .isEqualTo(slot.NotFound())
+                .expectSuccess()
+                .isEmpty()
         }
 
         @Test

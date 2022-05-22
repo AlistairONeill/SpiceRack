@@ -1,19 +1,16 @@
 package uk.co.alistaironeill.spicerack.repository
 
-import com.ubertob.kondor.outcome.asFailure
 import com.ubertob.kondor.outcome.asSuccess
 import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
 import uk.co.alistaironeill.spicerack.model.Led
-import uk.co.alistaironeill.spicerack.model.NotFound
 import uk.co.alistaironeill.spicerack.model.Slot
 
 class InMemoryLedGroupRepository : LedGroupRepository {
     private val data = HashMap<Slot, Set<Led>>()
 
     override fun get(slot: Slot): AonOutcome<Set<Led>> =
-        data[slot]?.asSuccess()
-            ?: slot.NotFound().asFailure()
+        (data[slot] ?: emptySet()).asSuccess()
 
     override fun get(): AonOutcome<Map<Slot, Set<Led>>> =
         data.asSuccess()

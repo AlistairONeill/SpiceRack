@@ -14,6 +14,7 @@ import uk.co.alistaironeill.spicerack.model.JSlotString
 import uk.co.alistaironeill.spicerack.model.Led
 import uk.co.alistaironeill.spicerack.model.Slot
 import uk.co.alistaironeill.spicerack.slot.LedGroupSourceHttpHandler.SLOT
+import uk.co.alistaironeill.spicerack.source.LedGroupSource
 
 class HttpLedGroupSource(private val handler: HttpHandler): LedGroupSource {
     override fun get(slot: Slot): AonOutcome<Set<Led>> =
@@ -32,8 +33,9 @@ class HttpLedGroupSource(private val handler: HttpHandler): LedGroupSource {
             .run(handler)
             .handle()
 
-    override fun clear(slot: Slot): UnitOutcome =
+    override fun remove(slot: Slot, led: Led): UnitOutcome =
         Request(DELETE, slot.url)
+            .bodyAsJson(led, JLed)
             .run(handler)
             .handle()
 

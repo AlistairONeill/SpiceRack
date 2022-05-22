@@ -10,16 +10,17 @@ import uk.co.alistaironeill.spicerack.io.StubSpiceRackIO
 import uk.co.alistaironeill.spicerack.model.*
 import uk.co.alistaironeill.spicerack.outcome.expectFailure
 import uk.co.alistaironeill.spicerack.outcome.expectSuccess
+import uk.co.alistaironeill.spicerack.repository.InMemoryLedGroupRepository
 import uk.co.alistaironeill.spicerack.repository.InMemorySpiceRepository
-import uk.co.alistaironeill.spicerack.slot.InMemoryLedGroupSource
 import uk.co.alistaironeill.spicerack.slot.InMemorySpiceSlotSource
+import uk.co.alistaironeill.spicerack.source.RealLedGroupSource
 import uk.co.alistaironeill.spicerack.source.RealSpiceSource
 import uk.co.alistaironeill.spicerack.spice.RGB
 
 abstract class SpiceRackControllerTest {
     protected val spiceRackIO = StubSpiceRackIO()
     protected val spiceSource = RealSpiceSource(InMemorySpiceRepository())
-    protected val ledGroupSource = InMemoryLedGroupSource()
+    protected val ledGroupSource = RealLedGroupSource(InMemoryLedGroupRepository())
     protected val slotSource = InMemorySpiceSlotSource()
 
     protected abstract val controller : SpiceRackController

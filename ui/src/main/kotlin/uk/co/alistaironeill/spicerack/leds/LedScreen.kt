@@ -21,7 +21,7 @@ import uk.co.alistaironeill.spicerack.model.Led.Strip.ZERO
 import uk.co.alistaironeill.spicerack.model.Slot
 import uk.co.alistaironeill.spicerack.reusable.IntSelector
 import uk.co.alistaironeill.spicerack.reusable.NiceRadio
-import uk.co.alistaironeill.spicerack.slot.LedGroupSource
+import uk.co.alistaironeill.spicerack.source.LedGroupSource
 
 @Composable
 fun LedScreen(source: LedGroupSource) {

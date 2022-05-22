@@ -1,6 +1,4 @@
-@file:Suppress("unused")
-
-package uk.co.alistaironeill.spicerack.slot
+package uk.co.alistaironeill.spicerack.source
 
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -24,11 +22,11 @@ abstract class LedGroupSourceTest {
     @Nested
     inner class GetBySlot {
         @Test
-        fun `returns NotFound for unknown slot`() {
+        fun `returns empty set for slot with nothing added`() {
             val slot = slots.first()
             source.get(slot)
-                .expectFailure()
-                .isEqualTo(slot.NotFound())
+                .expectSuccess()
+                .isEmpty()
         }
 
         @Test
@@ -46,24 +44,10 @@ abstract class LedGroupSourceTest {
                 .expectSuccess()
                 .isEqualTo(leds)
         }
-
-        @Test
-        fun `does not return leds which have been assigned to a different slot`() {
-            repeat(3) {
-                source.add(slots.first(), leds.first())
-                    .expectSuccess()
-            }
-
-            val slot = slots.first()
-
-            source.get(slot)
-                .expectFailure()
-                .isEqualTo(slot.NotFound())
-        }
     }
 
     @Nested
-    inner class Put {
+    inner class Add {
         @Test
         fun `can put an led in a slot`() {
             val led = leds.first()
@@ -79,30 +63,22 @@ abstract class LedGroupSourceTest {
         }
 
         @Test
-        fun `assigning an led to a slot removes it from another slot`() {
+        fun `an LED can belong to multiple slots`() {
             val led = leds.first()
-            val (first, second) = slots.take(2)
+            val (slot1, slot2) = slots.take(2)
 
-            source.add(first, led)
+            source.add(slot1, led)
                 .expectSuccess()
 
-            source.get(first)
+            source.add(slot2, led)
+                .expectSuccess()
+
+            source.get(slot1)
                 .expectSuccess()
                 .single()
                 .isEqualTo(led)
 
-            source.get(second)
-                .expectFailure()
-                .isEqualTo(second.NotFound())
-
-            source.add(second, led)
-                .expectSuccess()
-
-            source.get(first)
-                .expectFailure()
-                .isEqualTo(first.NotFound())
-
-            source.get(second)
+            source.get(slot2)
                 .expectSuccess()
                 .single()
                 .isEqualTo(led)
@@ -110,51 +86,31 @@ abstract class LedGroupSourceTest {
     }
 
     @Nested
-    inner class Clear {
+    inner class Remove {
         @Test
-        fun `can clear a slot`() {
-            val (slotToClear, slotToRemain) = slots.take(2)
-            val ledsToClear = leds
-                .take(3)
-                .onEach { led ->
-                    source.add(slotToClear, led)
-                        .expectSuccess()
-                }
-                .toSet()
+        fun `can remove an led in a slot`() {
+            val led = leds.first()
+            val slot = slots.first()
 
-            val ledsToRemain = leds
-                .take(3)
-                .onEach { led ->
-                    source.add(slotToRemain, led)
-                        .expectSuccess()
-                }
-                .toSet()
-
-            source.get(slotToClear)
-                .expectSuccess()
-                .isEqualTo(ledsToClear)
-
-            source.get(slotToRemain)
-                .expectSuccess()
-                .isEqualTo(ledsToRemain)
-
-            source.clear(slotToClear)
+            source.add(slot, led)
                 .expectSuccess()
 
-            source.get(slotToClear)
-                .expectFailure()
-                .isEqualTo(slotToClear.NotFound())
-
-            source.get(slotToRemain)
+            source.remove(slot, led)
                 .expectSuccess()
-                .isEqualTo(ledsToRemain)
+
+            source.get(slot)
+                .expectSuccess()
+                .isEmpty()
         }
 
         @Test
-        fun `attempting to clear a slot without assigned leds does not return an error`() {
-            slots.first()
-                .let(source::clear)
-                .expectSuccess()
+        fun `returns NotFound error if trying to remove an led from a slot which doesn't have it`() {
+            val led = leds.first()
+            val slot = slots.first()
+
+            source.remove(slot, led)
+                .expectFailure()
+                .isEqualTo(led.NotFound(slot))
         }
     }
 
