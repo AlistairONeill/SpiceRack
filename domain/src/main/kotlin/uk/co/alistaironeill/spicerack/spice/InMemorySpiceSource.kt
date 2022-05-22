@@ -2,8 +2,6 @@ package uk.co.alistaironeill.spicerack.spice
 
 import com.ubertob.kondor.outcome.*
 import uk.co.alistaironeill.spicerack.error.AonOutcome
-import uk.co.alistaironeill.spicerack.error.BadRequest.AlreadyExists
-import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
 import uk.co.alistaironeill.spicerack.model.AlreadyExists
 import uk.co.alistaironeill.spicerack.model.NotFound

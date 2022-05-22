@@ -24,7 +24,7 @@ abstract class SpiceRackControllerTest {
     protected val ledGroupSource = InMemoryLedGroupSource()
     protected val slotSource = InMemorySpiceSlotSource()
 
-    abstract protected val controller : SpiceRackController
+    protected abstract val controller : SpiceRackController
 
     private val rgbs = RGB.randoms()
     private val names = Spice.Name.randoms()

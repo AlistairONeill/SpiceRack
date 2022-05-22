@@ -6,8 +6,6 @@ import org.bson.conversions.Bson
 import org.litote.kmongo.*
 import uk.co.alistaironeill.spicerack.MongoSource
 import uk.co.alistaironeill.spicerack.error.AonOutcome
-import uk.co.alistaironeill.spicerack.error.BadRequest
-import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
 import uk.co.alistaironeill.spicerack.model.AlreadyExists
 import uk.co.alistaironeill.spicerack.model.NotFound

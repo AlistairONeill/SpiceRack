@@ -3,7 +3,6 @@ package uk.co.alistaironeill.spicerack.slot
 import com.ubertob.kondor.outcome.asSuccess
 import com.ubertob.kondor.outcome.failIfNull
 import uk.co.alistaironeill.spicerack.error.AonOutcome
-import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
 import uk.co.alistaironeill.spicerack.model.NotFound
 import uk.co.alistaironeill.spicerack.model.Spice

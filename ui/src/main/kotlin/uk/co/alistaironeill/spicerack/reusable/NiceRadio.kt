@@ -1,3 +1,5 @@
+@file:Suppress("FunctionName")
+
 package uk.co.alistaironeill.spicerack.reusable
 
 import androidx.compose.foundation.BorderStroke

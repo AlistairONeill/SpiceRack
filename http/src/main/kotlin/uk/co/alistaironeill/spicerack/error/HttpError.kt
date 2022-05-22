@@ -1,7 +1,6 @@
 package uk.co.alistaironeill.spicerack.error
 
 import com.ubertob.kondor.json.JConverter
-import com.ubertob.kondor.json.ObjectNodeConverter
 import com.ubertob.kondor.outcome.Outcome
 import com.ubertob.kondor.outcome.OutcomeError
 import com.ubertob.kondor.outcome.bind

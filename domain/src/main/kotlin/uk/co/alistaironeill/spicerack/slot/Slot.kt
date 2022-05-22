@@ -2,7 +2,6 @@ package uk.co.alistaironeill.spicerack.slot
 
 import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.tinytype.TTCompanionByte
-import uk.co.alistaironeill.spicerack.tinytype.TTCompanionInt
 import uk.co.alistaironeill.spicerack.tinytype.TinyType
 
 data class Slot(val x: Index, val y: Index) {
