@@ -1,4 +1,4 @@
-package uk.co.alistaironeill.spicerack.slot
+package uk.co.alistaironeill.spicerack.model
 
 import uk.co.alistaironeill.spicerack.tinytype.TTCompanionByte
 import uk.co.alistaironeill.spicerack.tinytype.TinyType
@@ -12,7 +12,7 @@ data class Led(
     }
 
     data class Index(override val value: Byte) : TinyType<Byte> {
-        companion object : TTCompanionByte<Index>(::Index)
+        companion object : TTCompanionByte<Index>(Led::Index)
     }
 
     companion object

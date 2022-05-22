@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import strikt.assertions.isEqualTo
 import strikt.assertions.isNull
-import uk.co.alistaironeill.spicerack.model.NotFound
-import uk.co.alistaironeill.spicerack.model.Spice
+import uk.co.alistaironeill.spicerack.model.*
 import uk.co.alistaironeill.spicerack.outcome.expectFailure
 import uk.co.alistaironeill.spicerack.outcome.expectSuccess
 

@@ -4,8 +4,10 @@ import com.ubertob.kondor.outcome.asFailure
 import com.ubertob.kondor.outcome.asSuccess
 import uk.co.alistaironeill.spicerack.collections.invert
 import uk.co.alistaironeill.spicerack.error.AonOutcome
-import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
+import uk.co.alistaironeill.spicerack.model.Led
+import uk.co.alistaironeill.spicerack.model.NotFound
+import uk.co.alistaironeill.spicerack.model.Slot
 
 class InMemoryLedGroupSource : LedGroupSource {
     private val data = mutableMapOf<Led, Slot>()
@@ -15,7 +17,7 @@ class InMemoryLedGroupSource : LedGroupSource {
             .keys
             .let { leds ->
                 if (leds.isEmpty()) {
-                    NotFound(slot).asFailure()
+                    slot.NotFound().asFailure()
                 } else {
                     leds.asSuccess()
                 }

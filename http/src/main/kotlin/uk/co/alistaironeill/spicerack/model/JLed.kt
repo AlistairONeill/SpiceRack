@@ -1,4 +1,4 @@
-package uk.co.alistaironeill.spicerack.slot
+package uk.co.alistaironeill.spicerack.model
 
 import com.ubertob.kondor.json.JAny
 import com.ubertob.kondor.json.jsonnode.JsonNodeObject

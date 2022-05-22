@@ -1,6 +1,6 @@
 package uk.co.alistaironeill.spicerack.io
 
-import uk.co.alistaironeill.spicerack.slot.Led
+import uk.co.alistaironeill.spicerack.model.Led
 import uk.co.alistaironeill.spicerack.spice.RGB
 
 interface SpiceRackIO {

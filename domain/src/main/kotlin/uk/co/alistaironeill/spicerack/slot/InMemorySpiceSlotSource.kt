@@ -5,6 +5,7 @@ import com.ubertob.kondor.outcome.failIfNull
 import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
 import uk.co.alistaironeill.spicerack.model.NotFound
+import uk.co.alistaironeill.spicerack.model.Slot
 import uk.co.alistaironeill.spicerack.model.Spice
 
 class InMemorySpiceSlotSource : SpiceSlotSource {

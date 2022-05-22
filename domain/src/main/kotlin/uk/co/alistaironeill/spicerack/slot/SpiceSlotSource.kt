@@ -2,6 +2,7 @@ package uk.co.alistaironeill.spicerack.slot
 
 import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
+import uk.co.alistaironeill.spicerack.model.Slot
 import uk.co.alistaironeill.spicerack.model.Spice
 
 interface SpiceSlotSource {

@@ -4,8 +4,10 @@ import com.mongodb.client.MongoCollection
 import com.ubertob.kondor.outcome.failIf
 import org.litote.kmongo.eq
 import uk.co.alistaironeill.spicerack.error.AonOutcome
-import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
+import uk.co.alistaironeill.spicerack.model.Led
+import uk.co.alistaironeill.spicerack.model.NotFound
+import uk.co.alistaironeill.spicerack.model.Slot
 import uk.co.alistaironeill.spicerack.repository.MongoRepository
 
 class MongoLedGroupRepository(collection: MongoCollection<MongoLedGroupMembership>) : LedGroupSource,
@@ -16,7 +18,7 @@ class MongoLedGroupRepository(collection: MongoCollection<MongoLedGroupMembershi
                 MongoLedGroupMembership::slot eq slot
             ).map(MongoLedGroupMembership::led)
                 .toSet()
-        }.failIf( { it.isEmpty() }) { NotFound(slot) }
+        }.failIf( { it.isEmpty() }) { slot.NotFound() }
 
 
     override fun get(): AonOutcome<Map<Slot, Set<Led>>> =

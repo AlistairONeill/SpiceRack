@@ -7,7 +7,10 @@ import org.junit.jupiter.api.Test
 import strikt.assertions.isEmpty
 import strikt.assertions.isEqualTo
 import strikt.assertions.single
-import uk.co.alistaironeill.spicerack.error.NotFound
+import uk.co.alistaironeill.spicerack.model.Led
+import uk.co.alistaironeill.spicerack.model.NotFound
+import uk.co.alistaironeill.spicerack.model.Slot
+import uk.co.alistaironeill.spicerack.model.randoms
 import uk.co.alistaironeill.spicerack.outcome.expectFailure
 import uk.co.alistaironeill.spicerack.outcome.expectSuccess
 
@@ -25,7 +28,7 @@ abstract class LedGroupSourceTest {
             val slot = slots.first()
             source.get(slot)
                 .expectFailure()
-                .isEqualTo(NotFound(slot))
+                .isEqualTo(slot.NotFound())
         }
 
         @Test
@@ -55,7 +58,7 @@ abstract class LedGroupSourceTest {
 
             source.get(slot)
                 .expectFailure()
-                .isEqualTo(NotFound(slot))
+                .isEqualTo(slot.NotFound())
         }
     }
 
@@ -90,14 +93,14 @@ abstract class LedGroupSourceTest {
 
             source.get(second)
                 .expectFailure()
-                .isEqualTo(NotFound(second))
+                .isEqualTo(second.NotFound())
 
             source.add(second, led)
                 .expectSuccess()
 
             source.get(first)
                 .expectFailure()
-                .isEqualTo(NotFound(first))
+                .isEqualTo(first.NotFound())
 
             source.get(second)
                 .expectSuccess()
@@ -140,7 +143,7 @@ abstract class LedGroupSourceTest {
 
             source.get(slotToClear)
                 .expectFailure()
-                .isEqualTo(NotFound(slotToClear))
+                .isEqualTo(slotToClear.NotFound())
 
             source.get(slotToRemain)
                 .expectSuccess()

@@ -11,6 +11,9 @@ import uk.co.alistaironeill.spicerack.error.perform
 import uk.co.alistaironeill.spicerack.error.toLens
 import uk.co.alistaironeill.spicerack.error.toResponse
 import uk.co.alistaironeill.spicerack.http.int
+import uk.co.alistaironeill.spicerack.model.JLed
+import uk.co.alistaironeill.spicerack.model.JSlotString
+import uk.co.alistaironeill.spicerack.model.Slot
 
 object LedGroupSourceHttpHandler {
     const val SLOT = "/api/slot"

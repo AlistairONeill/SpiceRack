@@ -1,4 +1,4 @@
-package uk.co.alistaironeill.spicerack.slot
+package uk.co.alistaironeill.spicerack.model
 
 import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.tinytype.TTCompanionByte
@@ -11,4 +11,4 @@ data class Slot(val x: Index, val y: Index) {
     companion object
 }
 
-operator fun NotFound.Companion.invoke(slot: Slot) = NotFound("Slot", "${slot.x},${slot.y}")
+fun Slot.NotFound() = NotFound("Slot", "${x.value},${y.value}")

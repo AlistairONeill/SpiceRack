@@ -15,13 +15,13 @@ import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.unit.dp
 import uk.co.alistaironeill.spicerack.error.orAlert
+import uk.co.alistaironeill.spicerack.model.Led
+import uk.co.alistaironeill.spicerack.model.Led.Strip.ONE
+import uk.co.alistaironeill.spicerack.model.Led.Strip.ZERO
+import uk.co.alistaironeill.spicerack.model.Slot
 import uk.co.alistaironeill.spicerack.reusable.IntSelector
 import uk.co.alistaironeill.spicerack.reusable.NiceRadio
-import uk.co.alistaironeill.spicerack.slot.Led
-import uk.co.alistaironeill.spicerack.slot.Led.Strip.ONE
-import uk.co.alistaironeill.spicerack.slot.Led.Strip.ZERO
 import uk.co.alistaironeill.spicerack.slot.LedGroupSource
-import uk.co.alistaironeill.spicerack.slot.Slot
 
 @Composable
 fun LedScreen(source: LedGroupSource) {

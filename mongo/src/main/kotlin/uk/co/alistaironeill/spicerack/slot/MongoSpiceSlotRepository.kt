@@ -6,6 +6,7 @@ import org.litote.kmongo.eq
 import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
 import uk.co.alistaironeill.spicerack.model.NotFound
+import uk.co.alistaironeill.spicerack.model.Slot
 import uk.co.alistaironeill.spicerack.model.Spice
 import uk.co.alistaironeill.spicerack.repository.MongoRepository
 

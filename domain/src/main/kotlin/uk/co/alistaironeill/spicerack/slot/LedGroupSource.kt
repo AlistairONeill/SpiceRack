@@ -2,6 +2,8 @@ package uk.co.alistaironeill.spicerack.slot
 
 import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
+import uk.co.alistaironeill.spicerack.model.Led
+import uk.co.alistaironeill.spicerack.model.Slot
 
 interface LedGroupSource {
     fun get(slot: Slot): AonOutcome<Set<Led>>

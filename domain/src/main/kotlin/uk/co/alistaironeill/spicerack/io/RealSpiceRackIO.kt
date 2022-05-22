@@ -1,8 +1,8 @@
 package uk.co.alistaironeill.spicerack.io
 
-import uk.co.alistaironeill.spicerack.slot.Led
-import uk.co.alistaironeill.spicerack.slot.Led.Strip.ONE
-import uk.co.alistaironeill.spicerack.slot.Led.Strip.ZERO
+import uk.co.alistaironeill.spicerack.model.Led
+import uk.co.alistaironeill.spicerack.model.Led.Strip.ONE
+import uk.co.alistaironeill.spicerack.model.Led.Strip.ZERO
 import uk.co.alistaironeill.spicerack.spice.RGB
 
 class RealSpiceRackIO(

@@ -9,6 +9,10 @@ import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
 import uk.co.alistaironeill.spicerack.http.bodyAsJson
 import uk.co.alistaironeill.spicerack.http.handle
+import uk.co.alistaironeill.spicerack.model.JLed
+import uk.co.alistaironeill.spicerack.model.JSlotString
+import uk.co.alistaironeill.spicerack.model.Led
+import uk.co.alistaironeill.spicerack.model.Slot
 import uk.co.alistaironeill.spicerack.slot.LedGroupSourceHttpHandler.SLOT
 
 class HttpLedGroupSource(private val handler: HttpHandler): LedGroupSource {
