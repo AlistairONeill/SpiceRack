@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test
 import strikt.assertions.contains
 import strikt.assertions.isEmpty
 import strikt.assertions.isEqualTo
-import uk.co.alistaironeill.spicerack.domain.colour.random
-import uk.co.alistaironeill.spicerack.domain.spice.random
+import uk.co.alistaironeill.spicerack.model.random
 import uk.co.alistaironeill.spicerack.model.AlreadyExists
 import uk.co.alistaironeill.spicerack.model.NotFound
 import uk.co.alistaironeill.spicerack.model.Spice

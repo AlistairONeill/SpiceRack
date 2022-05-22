@@ -20,6 +20,8 @@ data class Spice(
     data class Name(override val value: String) : TinyType<String> {
         companion object : TTCompanionString<Name>(::Name)
     }
+
+    companion object
 }
 
 

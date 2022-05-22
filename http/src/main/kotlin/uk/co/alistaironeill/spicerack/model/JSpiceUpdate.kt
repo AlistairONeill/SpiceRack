@@ -1,4 +1,4 @@
-package uk.co.alistaironeill.spicerack.spice
+package uk.co.alistaironeill.spicerack.model
 
 import com.ubertob.kondor.json.JAny
 import com.ubertob.kondor.json.JSealed
@@ -6,7 +6,7 @@ import com.ubertob.kondor.json.ObjectNodeConverter
 import com.ubertob.kondor.json.jsonnode.JsonNodeObject
 import com.ubertob.kondor.json.obj
 import uk.co.alistaironeill.spicerack.json.str
-import uk.co.alistaironeill.spicerack.spice.SpiceUpdate.*
+import uk.co.alistaironeill.spicerack.model.SpiceUpdate.*
 
 object JSpiceUpdate : JSealed<SpiceUpdate>() {
     private const val RENAME = "Rename"

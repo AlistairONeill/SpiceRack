@@ -1,6 +1,6 @@
-package uk.co.alistaironeill.spicerack.spice
+package uk.co.alistaironeill.spicerack.model
 
-import uk.co.alistaironeill.spicerack.model.Spice
+import uk.co.alistaironeill.spicerack.spice.RGB
 
 sealed interface SpiceUpdate {
     data class Rename(val name: Spice.Name) : SpiceUpdate

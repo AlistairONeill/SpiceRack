@@ -1,11 +1,10 @@
-package uk.co.alistaironeill.spicerack.spice
+package uk.co.alistaironeill.spicerack.model
 
 import com.ubertob.kondor.json.JAny
 import com.ubertob.kondor.json.array
 import com.ubertob.kondor.json.jsonnode.JsonNodeObject
 import com.ubertob.kondor.json.obj
 import uk.co.alistaironeill.spicerack.json.str
-import uk.co.alistaironeill.spicerack.model.Spice
 
 object JSpice : JAny<Spice>() {
     private val id by str(Spice::id)

@@ -8,10 +8,13 @@ import uk.co.alistaironeill.spicerack.error.AonOutcome
 import uk.co.alistaironeill.spicerack.error.UnitOutcome
 import uk.co.alistaironeill.spicerack.http.bodyAsJson
 import uk.co.alistaironeill.spicerack.http.handle
+import uk.co.alistaironeill.spicerack.model.JSpice
+import uk.co.alistaironeill.spicerack.model.JSpiceUpdate
 import uk.co.alistaironeill.spicerack.model.Spice
+import uk.co.alistaironeill.spicerack.model.SpiceUpdate
 import uk.co.alistaironeill.spicerack.spice.SpiceSourceHttpHandler.SPICE_NAME_PATH
 import uk.co.alistaironeill.spicerack.spice.SpiceSourceHttpHandler.SPICE_PATH
-import uk.co.alistaironeill.spicerack.spice.SpiceUpdate.*
+import uk.co.alistaironeill.spicerack.model.SpiceUpdate.*
 
 class HttpSpiceSource(private val handler: HttpHandler): SpiceSource {
     override fun get(): AonOutcome<Set<Spice>> =

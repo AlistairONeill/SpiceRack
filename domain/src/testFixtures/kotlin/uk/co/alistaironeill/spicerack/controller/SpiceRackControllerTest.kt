@@ -6,9 +6,8 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import strikt.api.expectThat
 import strikt.assertions.*
-import uk.co.alistaironeill.spicerack.domain.colour.random
-import uk.co.alistaironeill.spicerack.domain.colour.randoms
-import uk.co.alistaironeill.spicerack.domain.spice.randoms
+import uk.co.alistaironeill.spicerack.model.random
+import uk.co.alistaironeill.spicerack.model.randoms
 import uk.co.alistaironeill.spicerack.error.NotFound
 import uk.co.alistaironeill.spicerack.io.StubSpiceRackIO
 import uk.co.alistaironeill.spicerack.model.NotFound

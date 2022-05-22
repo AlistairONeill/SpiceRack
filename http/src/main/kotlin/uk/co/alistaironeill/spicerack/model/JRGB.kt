@@ -1,8 +1,9 @@
-package uk.co.alistaironeill.spicerack.spice
+package uk.co.alistaironeill.spicerack.model
 
 import com.ubertob.kondor.json.JAny
 import com.ubertob.kondor.json.jsonnode.JsonNodeObject
 import uk.co.alistaironeill.spicerack.json.num
+import uk.co.alistaironeill.spicerack.spice.RGB
 
 object JRGB : JAny<RGB>() {
     private val red by num(RGB::red)

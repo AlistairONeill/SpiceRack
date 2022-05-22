@@ -10,7 +10,10 @@ import uk.co.alistaironeill.spicerack.error.perform
 import uk.co.alistaironeill.spicerack.error.toLens
 import uk.co.alistaironeill.spicerack.error.toResponse
 import uk.co.alistaironeill.spicerack.http.str
+import uk.co.alistaironeill.spicerack.model.JSpice
+import uk.co.alistaironeill.spicerack.model.JSpiceUpdate
 import uk.co.alistaironeill.spicerack.model.Spice
+import uk.co.alistaironeill.spicerack.model.SpiceUpdate
 
 object SpiceSourceHttpHandler {
     const val SPICE_PATH = "/api/spice"
